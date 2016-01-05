@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from collective.lazysizes.logger import logger
+from lxml import etree
 from plone import api
 from plone.transformchain.interfaces import ITransform
 from repoze.xmliter.utils import getHTMLSerializer
-from zope.component import adapts
 from zope.interface import implementer
 
 
@@ -50,6 +50,8 @@ class LazySizesTransform(object):
         if element.tag == 'img':
             portal_url = api.portal.get().absolute_url()
             element.attrib['src'] = portal_url + '/spinner.gif'
+        elif element.tag == 'iframe':
+            del element.attrib['src']
 
         msg = '<{0}> with src="{1}" was processed for lazy loading.'
         logger.info(msg.format(element.tag, element.attrib['data-src']))
@@ -69,7 +71,7 @@ class LazySizesTransform(object):
             return None
 
         # we only process elements inside the "content" <div>
-        root  = '//div[@id="content"]'
+        root = '//div[@id="content"]'
         [self._lazyload(e) for e in result.tree.xpath(root + '//img')]
         [self._lazyload(e) for e in result.tree.xpath(root + '//iframe')]
 
