@@ -8,7 +8,7 @@ Share and Enjoy
 
 You can find an updated list of package contributors on `GitHub`_.
 
-Development sponsored by Open Multimedia, Ravvit and `Simples Consultoria`_.
+Development sponsored by `Simples Consultoria`_.
 
 .. _`Alexander Farkas`: https://github.com/aFarkas
 .. _`GitHub`: https://github.com/collective/collective.lazysizes/contributors
