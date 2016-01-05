@@ -1,0 +1,30 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="collective.lazysizes">
+
+  <genericsetup:registerProfile
+      name="default"
+      title="collective.lazysizes: v2"
+      directory="profile"
+      description="Upgrades package to v2"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      i18n:attributes="title; description"
+      />
+
+  <genericsetup:upgradeSteps
+      source="1"
+      destination="2"
+      profile="collective.lazysizes:default">
+
+      <genericsetup:upgradeStep
+          title="Apply profile"
+          description=""
+          handler=".apply_profile"
+          />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

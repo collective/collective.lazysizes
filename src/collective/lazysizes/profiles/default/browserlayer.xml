@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layers>
+  <layer
+      name="collective.lazysizes"
+      interface="collective.lazysizes.interfaces.ILazySizesLayer"
+      />
+</layers>
