@@ -57,17 +57,19 @@ How does it work
 
 This package adds a transform to the transform chain to integrate `lazysizes`_ into Plone.
 
-The transform looks for all the ``<img>`` and <iframe> elements inside the content and does the following:
+The transform looks for all the ``<img>`` and ``<iframe>`` elements inside the content and does the following:
 
 * appends a ``lazyload`` class
 * transforms the ``src`` attribute into a ``data-src`` attribute
 * if the element is an ``<img>``, uses an spinner as ``src`` attribute (this is done to maintain valid HTML code)
 
+The transform is only applied to anonymous users.
+
 Todo
 ----
 
- * implement support for responsive images with ``srcset`` and automatic ``sizes`` attribute
- * replace spinner with low resolution image scale (if not to expensive to calculate)
- * allow blacklisting images (lazing loading feature could be duplicated on some carousels)
+* implement support for responsive images with ``srcset`` and automatic ``sizes`` attribute
+* replace spinner with low resolution image scale (if not to expensive to calculate)
+* allow blacklisting images (lazing loading feature could be duplicated on some carousels)
 
 .. _`lazysizes`: https://afarkas.github.io/lazysizes/
