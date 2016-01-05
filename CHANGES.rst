@@ -4,7 +4,8 @@ Changelog
 1.0b1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Logging now uses `debug` level instead of `info`.
+  [hvelarde]
 
 
 1.0a1 (2016-01-05)

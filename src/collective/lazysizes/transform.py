@@ -54,7 +54,7 @@ class LazySizesTransform(object):
             del element.attrib['src']
 
         msg = '<{0}> with src="{1}" was processed for lazy loading.'
-        logger.info(msg.format(element.tag, element.attrib['data-src']))
+        logger.debug(msg.format(element.tag, element.attrib['data-src']))
 
     def transformBytes(self, result, encoding):
         return None
