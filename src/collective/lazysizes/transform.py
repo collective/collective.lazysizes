@@ -49,7 +49,7 @@ class LazySizesTransform(object):
 
         if element.tag == 'img':
             portal_url = api.portal.get().absolute_url()
-            element.attrib['src'] = portal_url + '/spinner.gif'
+            element.attrib['src'] = portal_url + '/++resource++collective.lazysizes/blank.png'
         elif element.tag == 'iframe':
             del element.attrib['src']
 
