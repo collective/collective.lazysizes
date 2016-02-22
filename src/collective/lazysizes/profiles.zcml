@@ -22,7 +22,7 @@
       i18n:attributes="title; description"
       />
 
-  <!--include package=".upgrades" /-->
+  <include package=".upgrades" />
 
   <utility factory=".setuphandlers.HiddenProducts" name="collective.lazysizes" />
   <utility factory=".setuphandlers.HiddenProfiles" name="collective.lazysizes" />

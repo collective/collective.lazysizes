@@ -1,8 +1,11 @@
 Changelog
 =========
 
-1.0b1 (unreleased)
-------------------
+1.4.0a1 (unreleased)
+--------------------
+
+- Update lazysizes and respimg polyfill extension to v1.4.0.
+  [hvelarde]
 
 - Use a blank image instead of a spinner as placeholder.
   [hvelarde]
