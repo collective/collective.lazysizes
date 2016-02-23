@@ -23,3 +23,15 @@ class ILazySizesSettings(form.Schema):
         value_type=schema.Choice(
             vocabulary=u'collective.lazysizes.ImageScales'),
     )
+
+    form.widget('css_class_blacklist', cols=25, rows=10)
+    css_class_blacklist = schema.Set(
+        title=_(u'CSS class blacklist'),
+        description=_(
+            u'A list of class identifiers that will not be processed for lazy loading. '
+            u'&lt;img&gt; and &lt;iframe&gt; elements with that class directly applied to them, or to a parent element, will be skipped.'
+        ),
+        required=False,
+        default=set([]),
+        value_type=schema.ASCIILine(title=_(u'CSS class')),
+    )

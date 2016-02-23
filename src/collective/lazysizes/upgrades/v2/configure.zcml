@@ -25,6 +25,13 @@
         handler="..cook_javascript_resources"
         />
 
+    <genericsetup:upgradeDepends
+        title="Add new field to configlet"
+        description="Reload registration of configlet registry to add new field."
+        import_steps="plone.app.registry"
+        run_deps="false"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

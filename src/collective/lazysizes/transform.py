@@ -1,10 +1,19 @@
 # -*- coding: utf-8 -*-
+from collective.lazysizes.interfaces import ILazySizesSettings
 from collective.lazysizes.logger import logger
 from lxml import etree
 from plone import api
 from plone.transformchain.interfaces import ITransform
 from repoze.xmliter.utils import getHTMLSerializer
 from zope.interface import implementer
+
+
+# to avoid additional network round trips to render content above the fold
+# we only process elements inside the "content" element
+ROOT_SELECTOR = '//div[@id="content"]'
+
+# elements by CSS class; http://stackoverflow.com/a/1604480
+CLASS_SELECTOR = '//*[contains(concat(" ", normalize-space(@class), " "), " {0} ")]'
 
 
 @implementer(ITransform)
@@ -56,6 +65,19 @@ class LazySizesTransform(object):
         msg = '<{0}> with src="{1}" was processed for lazy loading.'
         logger.debug(msg.format(element.tag, element.attrib['data-src']))
 
+    def _blacklist(self, result, blacklisted_classes):
+        """Return a list of blacklisted elements."""
+        if not blacklisted_classes:
+            return ()
+
+        path = []
+        for css_class in blacklisted_classes:
+            path.append('{0}{1}//img|{0}{1}//iframe'.format(
+                ROOT_SELECTOR, CLASS_SELECTOR.format(css_class)))
+
+        path = '|'.join(path)
+        return result.tree.xpath(path)
+
     def transformBytes(self, result, encoding):
         return None
 
@@ -70,9 +92,14 @@ class LazySizesTransform(object):
         if result is None:
             return None
 
-        # we only process elements inside the "content" <div>
-        root = '//div[@id="content"]'
-        [self._lazyload(e) for e in result.tree.xpath(root + '//img')]
-        [self._lazyload(e) for e in result.tree.xpath(root + '//iframe')]
+        record = ILazySizesSettings.__identifier__ + '.css_class_blacklist'
+        blacklist = api.portal.get_registry_record(record)
+        blacklist = self._blacklist(result, blacklist)
+
+        path = '{0}//img|{0}//iframe'.format(ROOT_SELECTOR)
+        for el in result.tree.xpath(path):
+            if el in blacklist:
+                continue
+            self._lazyload(el)
 
         return result
