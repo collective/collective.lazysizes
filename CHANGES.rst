@@ -4,6 +4,10 @@ Changelog
 1.4.0a1 (unreleased)
 --------------------
 
+- Add option to list class identifiers that will not be processed for lazy loading.
+  `<img>` and `<iframe>` elements with that class directly applied to them, or to a parent element, will be skiped (closes `#5`_).
+  [rodfersou, hvelarde]
+
 - Update lazysizes and respimg polyfill extension to v1.4.0.
   [hvelarde]
 
@@ -18,3 +22,5 @@ Changelog
 ------------------
 
 - Initial release.
+
+.. _`#5`: https://github.com/collective/collective.lazysizes/issues/5

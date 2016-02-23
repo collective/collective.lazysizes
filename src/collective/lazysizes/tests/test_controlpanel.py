@@ -59,6 +59,10 @@ class RegistryTestCase(unittest.TestCase):
         self.assertTrue(hasattr(self.settings, 'image_candidates'))
         self.assertEqual(self.settings.image_candidates, [])
 
+    def test_css_class_blacklist_record_in_registry(self):
+        self.assertTrue(hasattr(self.settings, 'css_class_blacklist'))
+        self.assertEqual(self.settings.css_class_blacklist, set([]))
+
     def test_records_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
 
@@ -67,6 +71,7 @@ class RegistryTestCase(unittest.TestCase):
 
         records = [
             ILazySizesSettings.__identifier__ + '.image_candidates',
+            ILazySizesSettings.__identifier__ + '.css_class_blacklist',
         ]
 
         for r in records:

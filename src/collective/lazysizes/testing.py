@@ -12,13 +12,12 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        # Load ZCML
         import collective.lazysizes
         self.loadZCML(package=collective.lazysizes)
 
     def setUpPloneSite(self, portal):
-        self.applyProfile(
-            portal, 'collective.lazysizes:default')
+        self.applyProfile(portal, 'collective.lazysizes:default')
+        portal.portal_workflow.setDefaultChain('one_state_workflow')
 
 
 FIXTURE = Fixture()
