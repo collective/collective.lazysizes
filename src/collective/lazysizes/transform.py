@@ -10,7 +10,7 @@ from zope.interface import implementer
 
 # to avoid additional network round trips to render content above the fold
 # we only process elements inside the "content" element
-ROOT_SELECTOR = '//div[@id="content"]'
+ROOT_SELECTOR = '//*[@id="content"]'
 
 # elements by CSS class; http://stackoverflow.com/a/1604480
 CLASS_SELECTOR = '//*[contains(concat(" ", normalize-space(@class), " "), " {0} ")]'
