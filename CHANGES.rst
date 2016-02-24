@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.4.0a1 (unreleased)
+1.4.0a1 (2016-02-23)
 --------------------
 
 - Add option to list class identifiers that will not be processed for lazy loading.
