@@ -65,11 +65,11 @@ The transform looks for all the ``<img>`` and ``<iframe>`` elements inside the c
 
 The transform is only applied to anonymous users.
 
+As long as `we have tested <https://github.com/aFarkas/lazysizes/issues/239>`_, `lazysizes`_ seems not to interfere with image indexing made by crawlers like Googlebot.
+
 Todo
 ----
 
 * implement support for responsive images with ``srcset`` and automatic ``sizes`` attribute
-* replace spinner with low resolution image scale (if not to expensive to calculate)
-* allow blacklisting images (lazing loading feature could be duplicated on some carousels)
 
 .. _`lazysizes`: https://afarkas.github.io/lazysizes/
