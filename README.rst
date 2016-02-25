@@ -12,6 +12,8 @@ This package integrates `lazysizes`_, a lightweight lazy loader, into Plone.
 `lazysizes`_ is a fast, SEO-friendly and self-initializing lazyloader for images (including responsive images picture/srcset), iframes, scripts/widgets and much more.
 It also prioritizes resources by differentiating between crucial in view and near view elements to make perceived performance even faster.
 
+By using this package you can expect reductions of up to 80% in load time, 75% in page size and 50% in number of requests.
+
 Mostly Harmless
 ===============
 
@@ -24,9 +26,13 @@ Mostly Harmless
 .. image:: https://img.shields.io/coveralls/collective/collective.lazysizes/master.svg
     :target: https://coveralls.io/r/collective/collective.lazysizes
 
-Got an idea? Found a bug? Let us know by `opening a support ticket`_.
+These are some sites using ``collective.lazysizes``:
 
-.. _`opening a support ticket`: https://github.com/collective/collective.lazysizes/issues
+* `CartaCapital <http://www.cartacapital.com.br/>`_ (BR)
+* `Conversa Afiada <http://www.conversaafiada.com.br/>`_ (BR)
+* `Portal Brasil 2016 <http://www.brasil2016.gov.br/>`_ (BR)
+
+Got an idea? Found a bug? Let us know by `opening a support ticket <https://github.com/collective/collective.lazysizes/issues>`_.
 
 Don't Panic
 ===========
