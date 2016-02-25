@@ -7,6 +7,7 @@ from plone.browserlayer.utils import registered_layers
 
 import unittest
 
+
 JS = (
     '++resource++collective.lazysizes/ls.respimg.min.js',
     '++resource++collective.lazysizes/lazysizes.min.js',
