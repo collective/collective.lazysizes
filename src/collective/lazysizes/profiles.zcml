@@ -24,7 +24,6 @@
 
   <include package=".upgrades" />
 
-  <utility factory=".setuphandlers.HiddenProducts" name="collective.lazysizes" />
   <utility factory=".setuphandlers.HiddenProfiles" name="collective.lazysizes" />
 
 </configure>

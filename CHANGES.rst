@@ -4,6 +4,9 @@ Changelog
 1.4.0a2 (unreleased)
 --------------------
 
+- Remove dependency on Products.CMFQuickInstallerTool.
+  [hvelarde]
+
 - Update lazysizes and respimg polyfill extension to v1.5.0.
   [hvelarde]
 
