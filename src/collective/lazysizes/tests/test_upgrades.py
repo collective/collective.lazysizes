@@ -71,3 +71,14 @@ class To2TestCase(UpgradeTestCaseBase):
         settings = registry.forInterface(ILazySizesSettings)
         self.assertTrue(hasattr(settings, 'css_class_blacklist'))
         self.assertEqual(settings.css_class_blacklist, set([]))
+
+
+class To3TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'2', u'3')
+
+    def test_upgrade_to_2_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
+        self.assertEqual(self.total_steps, 1)

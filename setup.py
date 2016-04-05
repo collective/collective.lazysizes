@@ -45,7 +45,6 @@ setup(
         'plone.directives.form',
         'plone.transformchain',
         'Products.CMFPlone >=4.3',
-        'Products.CMFQuickInstallerTool',
         'Products.GenericSetup',
         'repoze.xmliter',
         'setuptools',

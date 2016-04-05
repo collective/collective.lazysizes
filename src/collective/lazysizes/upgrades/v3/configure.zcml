@@ -5,21 +5,14 @@
     i18n_domain="collective.lazysizes">
 
   <genericsetup:upgradeSteps
-      source="1"
-      destination="2"
+      source="2"
+      destination="3"
       profile="collective.lazysizes:default">
 
     <genericsetup:upgradeStep
         title="Cook JavaScripts resources"
         description="There were changes in the JS files, so we need to cook the resources."
         handler="..cook_javascript_resources"
-        />
-
-    <genericsetup:upgradeDepends
-        title="Add new field to configlet"
-        description="Reload registration of configlet registry to add new field."
-        import_steps="plone.app.registry"
-        run_deps="false"
         />
 
   </genericsetup:upgradeSteps>
