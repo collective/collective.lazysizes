@@ -3,10 +3,8 @@
 	window.lazySizes = lazySizes;
 	if(typeof module == 'object' && module.exports){
 		module.exports = lazySizes;
-	} else if (typeof define == 'function' && define.amd) {
-		define(lazySizes);
 	}
-}(window, function(window, document) {
+}(window, function l(window, document) {
 	'use strict';
 	/*jshint eqnull:true */
 	if(!document.getElementsByClassName){return;}
@@ -130,58 +128,58 @@
 	};
 
 	/*
-	var throttle = function(fn){
-		var running;
-		var lastTime = 0;
-		var Date = window.Date;
-		var requestIdleCallback = window.requestIdleCallback;
-		var gDelay = 125;
-		var dTimeout = 999;
-		var timeout = dTimeout;
-		var fastCallThreshold = 0;
-		var run = function(){
-			running = false;
-			lastTime = Date.now();
-			fn();
-		};
-		var afterAF = function(){
-			setTimeout(run);
-		};
-		var getAF = function(){
-			rAF(afterAF);
-		};
+	 var throttle = function(fn){
+	 var running;
+	 var lastTime = 0;
+	 var Date = window.Date;
+	 var requestIdleCallback = window.requestIdleCallback;
+	 var gDelay = 125;
+	 var dTimeout = 999;
+	 var timeout = dTimeout;
+	 var fastCallThreshold = 0;
+	 var run = function(){
+	 running = false;
+	 lastTime = Date.now();
+	 fn();
+	 };
+	 var afterAF = function(){
+	 setTimeout(run);
+	 };
+	 var getAF = function(){
+	 rAF(afterAF);
+	 };
 
-		if(requestIdleCallback){
-			gDelay = 66;
-			fastCallThreshold = 22;
-			getAF = function(){
-				requestIdleCallback(run, {timeout: timeout});
-				if(timeout !== dTimeout){
-					timeout = dTimeout;
-				}
-			};
-		}
+	 if(requestIdleCallback){
+	 gDelay = 66;
+	 fastCallThreshold = 22;
+	 getAF = function(){
+	 requestIdleCallback(run, {timeout: timeout});
+	 if(timeout !== dTimeout){
+	 timeout = dTimeout;
+	 }
+	 };
+	 }
 
-		return function(isPriority){
-			var delay;
-			if((isPriority = isPriority === true)){
-				timeout = 40;
-			}
+	 return function(isPriority){
+	 var delay;
+	 if((isPriority = isPriority === true)){
+	 timeout = 40;
+	 }
 
-			if(running){
-				return;
-			}
+	 if(running){
+	 return;
+	 }
 
-			running =  true;
+	 running =  true;
 
-			if(isPriority || (delay = gDelay - (Date.now() - lastTime)) < fastCallThreshold){
-				getAF();
-			} else {
-				setTimeout(getAF, delay);
-			}
-		};
-	};
-	*/
+	 if(isPriority || (delay = gDelay - (Date.now() - lastTime)) < fastCallThreshold){
+	 getAF();
+	 } else {
+	 setTimeout(getAF, delay);
+	 }
+	 };
+	 };
+	 */
 
 	var loader = (function(){
 		var lazyloadElems, preloadElems, isCompleted, resetPreloadingTimer, loadMode, started;
@@ -228,9 +226,9 @@
 				if(visible && getCSS(parent, 'overflow') != 'visible'){
 					outerRect = parent.getBoundingClientRect();
 					visible = eLright > outerRect.left &&
-					eLleft < outerRect.right &&
-					eLbottom > outerRect.top - 1 &&
-					eLtop < outerRect.bottom + 1
+						eLleft < outerRect.right &&
+						eLbottom > outerRect.top - 1 &&
+						eLtop < outerRect.bottom + 1
 					;
 				}
 			}
@@ -249,7 +247,7 @@
 
 				if(preloadExpand == null){
 					if(!('expand' in lazySizesConfig)){
-						lazySizesConfig.expand = docElem.clientHeight > 600 ? docElem.clientWidth > 860 ? 500 : 410 : 359;
+						lazySizesConfig.expand = docElem.clientHeight > 600 ? docElem.clientWidth > 600 ? 550 : 410 : 359;
 					}
 
 					defaultExpand = lazySizesConfig.expand;
@@ -312,7 +310,13 @@
 		var switchLoadingClass = function(e){
 			addClass(e.target, lazySizesConfig.loadedClass);
 			removeClass(e.target, lazySizesConfig.loadingClass);
-			addRemoveLoadEvents(e.target, switchLoadingClass);
+			addRemoveLoadEvents(e.target, rafSwitchLoadingClass);
+		};
+		var rafSwitchLoadingClass = function(e){
+			e = {target: e.target};
+			rAF(function(){
+				switchLoadingClass(e);
+			});
 		};
 
 		var changeIframeSrc = function(elem, src){
@@ -353,12 +357,17 @@
 				}
 				isRunning = false;
 			};
-			return function(fn){
+			var add = function(fn){
 				batch.push(fn);
 				if(!isRunning){
 					isRunning = true;
 					rAF(runBatch);
 				}
+			};
+
+			return {
+				add: add,
+				run: runBatch
 			};
 		})();
 
@@ -380,10 +389,11 @@
 			elem._lazyRace = true;
 			isLoading++;
 
-			rafBatch(function lazyUnveil(){
-				if(elem._lazyRace){
-					delete elem._lazyRace;
-				}
+			if(lazySizesConfig.rC){
+				width = lazySizesConfig.rC(elem, width) || width;
+			}
+
+			rafBatch.add(function lazyUnveil(){
 
 				if(!(event = triggerEvent(elem, 'lazybeforeunveil')).defaultPrevented){
 
@@ -414,7 +424,7 @@
 						resetPreloadingTimer = setTimeout(resetPreloading, 2500);
 
 						addClass(elem, lazySizesConfig.loadingClass);
-						addRemoveLoadEvents(elem, switchLoadingClass, true);
+						addRemoveLoadEvents(elem, rafSwitchLoadingClass, true);
 					}
 
 					if(isPicture){
@@ -436,16 +446,21 @@
 					}
 				}
 
-				removeClass(elem, lazySizesConfig.lazyClass);
-
-				if( !firesLoad || elem.complete ){
-					if(firesLoad){
-						resetPreloading(event);
-					} else {
-						isLoading--;
+				rAF(function(){
+					if(elem._lazyRace){
+						delete elem._lazyRace;
 					}
-					switchLoadingClass(event);
-				}
+					removeClass(elem, lazySizesConfig.lazyClass);
+
+					if( !firesLoad || elem.complete ){
+						if(firesLoad){
+							resetPreloading(event);
+						} else {
+							isLoading--;
+						}
+						switchLoadingClass(event);
+					}
+				});
 			});
 		};
 
@@ -465,12 +480,11 @@
 
 			lazySizesConfig.loadMode = 3;
 
-			if(!isLoading){
-				if(lowRuns){
-					throttledCheckElements();
-				} else {
-					setTimeout(checkElements);
-				}
+			if(document.hidden){
+				checkElements();
+				rafBatch.run();
+			} else {
+				throttledCheckElements();
 			}
 
 			addEventListener('scroll', function(){
@@ -483,39 +497,39 @@
 		};
 
 		/*
-		var onload = function(){
-			var scrollTimer, timestamp;
-			var wait = 99;
-			var afterScroll = function(){
-				var last = (Date.now()) - timestamp;
+		 var onload = function(){
+		 var scrollTimer, timestamp;
+		 var wait = 99;
+		 var afterScroll = function(){
+		 var last = (Date.now()) - timestamp;
 
-				// if the latest call was less that the wait period ago
-				// then we reset the timeout to wait for the difference
-				if (last < wait) {
-					scrollTimer = setTimeout(afterScroll, wait - last);
+		 // if the latest call was less that the wait period ago
+		 // then we reset the timeout to wait for the difference
+		 if (last < wait) {
+		 scrollTimer = setTimeout(afterScroll, wait - last);
 
-					// or if not we can null out the timer and run the latest
-				} else {
-					scrollTimer = null;
-					lazySizesConfig.loadMode = 3;
-					throttledCheckElements();
-				}
-			};
+		 // or if not we can null out the timer and run the latest
+		 } else {
+		 scrollTimer = null;
+		 lazySizesConfig.loadMode = 3;
+		 throttledCheckElements();
+		 }
+		 };
 
-			isCompleted = true;
-			lowRuns += 8;
+		 isCompleted = true;
+		 lowRuns += 8;
 
-			lazySizesConfig.loadMode = 3;
+		 lazySizesConfig.loadMode = 3;
 
-			addEventListener('scroll', function(){
-				timestamp = Date.now();
-				if(!scrollTimer){
-					lazySizesConfig.loadMode = 2;
-					scrollTimer = setTimeout(afterScroll, wait);
-				}
-			}, true);
-		};
-		*/
+		 addEventListener('scroll', function(){
+		 timestamp = Date.now();
+		 if(!scrollTimer){
+		 lazySizesConfig.loadMode = 2;
+		 scrollTimer = setTimeout(afterScroll, wait);
+		 }
+		 }, true);
+		 };
+		 */
 
 		return {
 			_: function(){
@@ -678,4 +692,5 @@
 		fire: triggerEvent,
 		gW: getWidth
 	};
-}));
+}
+));
