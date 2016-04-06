@@ -2,6 +2,7 @@
 from collective.lazysizes.config import PROJECTNAME
 from collective.lazysizes.interfaces import ILazySizesLayer
 from collective.lazysizes.testing import INTEGRATION_TESTING
+from collective.lazysizes.testing import IS_PLONE_5
 from plone import api
 from plone.browserlayer.utils import registered_layers
 
@@ -30,6 +31,7 @@ class InstallTestCase(unittest.TestCase):
     def test_addon_layer(self):
         self.assertIn(ILazySizesLayer, registered_layers())
 
+    @unittest.skipIf(IS_PLONE_5, 'http://stackoverflow.com/q/36454395/644075')
     def test_jsregistry(self):
         resource_ids = self.portal['portal_javascripts'].getResourceIds()
         for js in JS:

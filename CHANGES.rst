@@ -4,6 +4,9 @@ Changelog
 1.4.0a2 (unreleased)
 --------------------
 
+- Package is now compatible with Plone 5.
+  [hvelarde]
+
 - Remove dependency on Products.CMFQuickInstallerTool.
   [hvelarde]
 

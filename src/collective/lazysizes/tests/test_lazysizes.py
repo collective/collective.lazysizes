@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from collective.lazysizes.testing import FUNCTIONAL_TESTING
+from collective.lazysizes.testing import IS_PLONE_5
 from plone import api
 from plone.testing.z2 import Browser
 
+import lxml
 import transaction
 import unittest
 
@@ -28,6 +30,19 @@ zptlogo = (
 )
 
 
+def set_image_field(obj, image, content_type):
+    """Set image field in object on both, Archetypes and Dexterity."""
+    from plone.namedfile.file import NamedBlobImage
+    try:
+        obj.setImage(image)  # Archetypes
+    except AttributeError:
+        # Dexterity
+        data = image if type(image) == str else image.getvalue()
+        obj.image = NamedBlobImage(data=data, contentType=content_type)
+    finally:
+        obj.reindexObject()
+
+
 class LazySizesTestCase(unittest.TestCase):
 
     layer = FUNCTIONAL_TESTING
@@ -38,44 +53,58 @@ class LazySizesTestCase(unittest.TestCase):
 
         with api.env.adopt_roles(['Manager']):
             self.image = api.content.create(
-                self.portal, 'Image', id='test-image', image=zptlogo)
+                self.portal, 'Image', id='test-image')
 
+        set_image_field(self.image, image=zptlogo, content_type='image/gif')
         transaction.commit()
 
     def test_lazysizes_enabled_for_anonymous_user(self):
         self.browser.open(self.image.absolute_url() + '/view')
-        self.html = self.browser.contents
+        html = lxml.html.fromstring(self.browser.contents)
 
         # main image was processed
-        self.assertIn(
-            'data-src="http://nohost/plone/test-image/image_preview"', self.html)
-        self.assertIn('++resource++collective.lazysizes/blank.png', self.html)
-        self.assertIn('class="lazyload"', self.html)
+        img = html.xpath('//img')[1]  # first image is the Plone logo
+        blank = 'http://nohost/plone/++resource++collective.lazysizes/blank.png'
+        self.assertEqual(blank, img.attrib['src'])
+        self.assertIn(self.image.absolute_url(), img.attrib['data-src'])
+        self.assertEqual(img.attrib['class'], 'lazyload')
 
-        # besides the main image, there are 2 additional icons
-        self.assertTrue(
-            self.html.count('++resource++collective.lazysizes/blank.png'), 3)
-        self.assertTrue(self.html.count('class="lazyload"'), 3)
-
-    def test_blacklist(self):
+    @unittest.skipIf(IS_PLONE_5, 'Plone 4 only')
+    def test_blacklist_plone_4(self):
         from collective.lazysizes.interfaces import ILazySizesSettings
         record = ILazySizesSettings.__identifier__ + '.css_class_blacklist'
-        api.portal.set_registry_record(record, set(['visualNoPrint']))
+        api.portal.set_registry_record(record, set(['discreet']))
         transaction.commit()
 
         self.browser.open(self.image.absolute_url() + '/view')
-        self.html = self.browser.contents
+        html = lxml.html.fromstring(self.browser.contents)
 
         # main image was processed
-        self.assertIn(
-            'data-src="http://nohost/plone/test-image/image_preview"', self.html)
-        self.assertIn('++resource++collective.lazysizes/blank.png', self.html)
-        self.assertIn('class="lazyload"', self.html)
+        img = html.xpath('//img')[1]  # first image is the Plone logo
+        blank = 'http://nohost/plone/++resource++collective.lazysizes/blank.png'
+        self.assertEqual(blank, img.attrib['src'])
+        self.assertIn(self.image.absolute_url(), img.attrib['data-src'])
+        self.assertEqual(img.attrib['class'], 'lazyload')
 
         # icons were not processed, but are present
-        self.assertTrue(
-            self.html.count('++resource++collective.lazysizes/blank.png'), 1)
-        self.assertTrue(self.html.count('class="lazyload"'), 1)
+        img = html.xpath('//img')[2]
+        self.assertEqual('http://nohost/plone/search_icon.png', img.attrib['src'])
+        self.assertNotIn('data-src', img.attrib)
+        img = html.xpath('//img')[3]
+        self.assertEqual('http://nohost/plone/download_icon.png', img.attrib['src'])
+        self.assertNotIn('data-src', img.attrib)
 
-        self.assertIn(' src="http://nohost/plone/search_icon.png"', self.html)
-        self.assertIn(' src="http://nohost/plone/download_icon.png"', self.html)
+    @unittest.skipIf(not IS_PLONE_5, 'Plone 5 only')
+    def test_blacklist_plone_5(self):
+        from collective.lazysizes.interfaces import ILazySizesSettings
+        record = ILazySizesSettings.__identifier__ + '.css_class_blacklist'
+        api.portal.set_registry_record(record, set(['discreet']))
+        transaction.commit()
+
+        self.browser.open(self.image.absolute_url() + '/view')
+        html = lxml.html.fromstring(self.browser.contents)
+
+        # main image was not processed
+        img = html.xpath('//img')[1]  # first image is the Plone logo
+        self.assertIn(self.image.absolute_url(), img.attrib['src'])
+        self.assertNotIn('data-src', img.attrib)
