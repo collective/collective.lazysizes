@@ -2,13 +2,12 @@
 from collective.lazysizes.config import PROJECTNAME
 from collective.lazysizes.interfaces import ILazySizesLayer
 from collective.lazysizes.testing import INTEGRATION_TESTING
+from collective.lazysizes.testing import IS_PLONE_5
 from plone import api
 from plone.browserlayer.utils import registered_layers
 
 import unittest
 
-
-IS_PLONE_5 = api.env.plone_version().startswith('5')
 
 JS = (
     '++resource++collective.lazysizes/ls.respimg.min.js',
