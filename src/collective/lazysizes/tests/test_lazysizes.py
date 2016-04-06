@@ -28,6 +28,19 @@ zptlogo = (
 )
 
 
+def set_image_field(obj, image, content_type):
+    """Set image field in object on both, Archetypes and Dexterity."""
+    from plone.namedfile.file import NamedBlobImage
+    try:
+        obj.setImage(image)  # Archetypes
+    except AttributeError:
+        # Dexterity
+        data = image if type(image) == str else image.getvalue()
+        obj.image = NamedBlobImage(data=data, contentType=content_type)
+    finally:
+        obj.reindexObject()
+
+
 class LazySizesTestCase(unittest.TestCase):
 
     layer = FUNCTIONAL_TESTING
@@ -38,8 +51,9 @@ class LazySizesTestCase(unittest.TestCase):
 
         with api.env.adopt_roles(['Manager']):
             self.image = api.content.create(
-                self.portal, 'Image', id='test-image', image=zptlogo)
+                self.portal, 'Image', id='test-image')
 
+        set_image_field(self.image, image=zptlogo, content_type='image/gif')
         transaction.commit()
 
     def test_lazysizes_enabled_for_anonymous_user(self):
