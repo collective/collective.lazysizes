@@ -8,6 +8,8 @@ from plone.browserlayer.utils import registered_layers
 import unittest
 
 
+IS_PLONE_5 = api.env.plone_version().startswith('5')
+
 JS = (
     '++resource++collective.lazysizes/ls.respimg.min.js',
     '++resource++collective.lazysizes/lazysizes.min.js',
@@ -30,6 +32,7 @@ class InstallTestCase(unittest.TestCase):
     def test_addon_layer(self):
         self.assertIn(ILazySizesLayer, registered_layers())
 
+    @unittest.skipIf(IS_PLONE_5, 'http://stackoverflow.com/q/36454395/644075')
     def test_jsregistry(self):
         resource_ids = self.portal['portal_javascripts'].getResourceIds()
         for js in JS:
