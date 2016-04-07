@@ -4,6 +4,9 @@ Changelog
 1.4.0a2 (unreleased)
 --------------------
 
+- Brazilian Portuguese and Spanish translations were added.
+  [hvelarde]
+
 - Deal better with <img> tags with no `src` attribute;
   log an error message with the request URL (closes `#11`_).
   [hvelarde]

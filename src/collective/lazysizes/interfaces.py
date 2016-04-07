@@ -28,7 +28,7 @@ class ILazySizesSettings(form.Schema):
     css_class_blacklist = schema.Set(
         title=_(u'CSS class blacklist'),
         description=_(
-            u'A list of class identifiers that will not be processed for lazy loading. '
+            u'A list of CSS class identifiers that will not be processed for lazy loading. '
             u'&lt;img&gt; and &lt;iframe&gt; elements with that class directly applied to them, or to a parent element, will be skipped.'
         ),
         required=False,

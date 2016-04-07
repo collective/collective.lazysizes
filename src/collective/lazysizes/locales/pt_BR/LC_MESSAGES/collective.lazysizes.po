@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-04-07 22:59+0000\n"
+"PO-Revision-Date: 2016-04-07 20:08-0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"X-Generator: Poedit 1.7.5\n"
+
+#: collective/lazysizes/interfaces.py:30
+msgid "A list of CSS class identifiers that will not be processed for lazy loading. &lt;img&gt; and &lt;iframe&gt; elements with that class directly applied to them, or to a parent element, will be skipped."
+msgstr "Uma lista de identificadores de classes CSS que não serão processados para carga diferida. Os elementos &lt;img&gt; e &lt;iframe&gt; com alguma de essas classes aplicadas direitamente neles, ou em algum elemento pai, serão ignorados."
+
+#: collective/lazysizes/interfaces.py:19
+msgid "A list of image scales to be used as image candidate strings."
+msgstr ""
+
+#: collective/lazysizes/interfaces.py:36
+msgid "CSS class"
+msgstr "Classes CSS"
+
+#: collective/lazysizes/interfaces.py:29
+msgid "CSS class blacklist"
+msgstr "Classes CSS a ignorar"
+
+#: collective/lazysizes/controlpanel.py:11
+msgid "Here you can modify the settings for collective.lazysizes."
+msgstr "Aqui pode modificar a configuração do collective.lazysizes."
+
+#: collective/lazysizes/interfaces.py:18
+msgid "Image candidates"
+msgstr ""
+
+#: collective/lazysizes/profiles.zcml:14
+msgid "Integration of lazysizes, a lightweight lazy loader, into Plone."
+msgstr "Suporte para lazy loading de imagens e iframes no Plone."
+
+#: collective/lazysizes/profiles.zcml:23
+msgid "Uninstalls collective.lazysizes."
+msgstr "Desinstala collective.lazysizes."
+
+#: collective/lazysizes/profiles.zcml:14
+msgid "collective.lazysizes"
+msgstr "collective.lazysizes"
+
+#: collective/lazysizes/profiles.zcml:23
+msgid "collective.lazysizes: uninstall"
+msgstr "collective.lazysizes: uninstall"
+
+#: collective/lazysizes/controlpanel.py:10
+#: collective/lazysizes/profiles/default/controlpanel.xml
+msgid "lazysizes"
+msgstr "lazysizes"
