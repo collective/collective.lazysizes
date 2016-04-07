@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.4.0a2 (unreleased)
+1.5.0a1 (2016-04-07)
 --------------------
 
 - Use data URI scheme for image placeholder to save one additional request (closes `#8`_).
