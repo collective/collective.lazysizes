@@ -4,6 +4,9 @@ Changelog
 1.4.0a2 (unreleased)
 --------------------
 
+- Use data URI scheme for image placeholder to save one additional request (closes `#8`_).
+  [hvelarde]
+
 - Brazilian Portuguese and Spanish translations were added.
   [hvelarde]
 
@@ -44,4 +47,5 @@ Changelog
 - Initial release.
 
 .. _`#5`: https://github.com/collective/collective.lazysizes/issues/5
+.. _`#8`: https://github.com/collective/collective.lazysizes/issues/8
 .. _`#11`: https://github.com/collective/collective.lazysizes/issues/11
