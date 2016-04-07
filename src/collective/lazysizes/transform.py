@@ -50,7 +50,7 @@ class LazySizesTransform(object):
         """
         classes = element.attrib.get('class', '').split(' ')
         if 'lazyload' in classes:
-            return  # already processed (I don't know if this could happen)
+            return  # this should never happen
 
         try:
             element.attrib['data-src'] = element.attrib['src']
