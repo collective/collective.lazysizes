@@ -52,9 +52,15 @@ class LazySizesTransform(object):
         if 'lazyload' in classes:
             return  # already processed (I don't know if this could happen)
 
+        try:
+            element.attrib['data-src'] = element.attrib['src']
+        except KeyError:
+            url = self.request['URL']
+            logger.error('<img> tag without src attribute in: ' + url)
+            return
+
         classes.append('lazyload')
         element.attrib['class'] = ' '.join(classes).strip()
-        element.attrib['data-src'] = element.attrib['src']
 
         if element.tag == 'img':
             portal_url = api.portal.get().absolute_url()

@@ -4,6 +4,10 @@ Changelog
 1.4.0a2 (unreleased)
 --------------------
 
+- Deal better with <img> tags with no `src` attribute;
+  log an error message with the request URL (closes `#11`_).
+  [hvelarde]
+
 - Package is now compatible with Plone 5.
   [hvelarde]
 
@@ -37,3 +41,4 @@ Changelog
 - Initial release.
 
 .. _`#5`: https://github.com/collective/collective.lazysizes/issues/5
+.. _`#11`: https://github.com/collective/collective.lazysizes/issues/11
