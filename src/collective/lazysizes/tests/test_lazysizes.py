@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.lazysizes.testing import FUNCTIONAL_TESTING
 from collective.lazysizes.testing import IS_PLONE_5
+from collective.lazysizes.transform import PLACEHOLDER
 from plone import api
 from plone.testing.z2 import Browser
 
@@ -64,8 +65,7 @@ class LazySizesTestCase(unittest.TestCase):
 
         # main image was processed
         img = html.xpath('//img')[1]  # first image is the Plone logo
-        blank = 'http://nohost/plone/++resource++collective.lazysizes/blank.png'
-        self.assertEqual(blank, img.attrib['src'])
+        self.assertEqual(PLACEHOLDER, img.attrib['src'])
         self.assertIn(self.image.absolute_url(), img.attrib['data-src'])
         self.assertEqual(img.attrib['class'], 'lazyload')
 
@@ -81,8 +81,7 @@ class LazySizesTestCase(unittest.TestCase):
 
         # main image was processed
         img = html.xpath('//img')[1]  # first image is the Plone logo
-        blank = 'http://nohost/plone/++resource++collective.lazysizes/blank.png'
-        self.assertEqual(blank, img.attrib['src'])
+        self.assertEqual(PLACEHOLDER, img.attrib['src'])
         self.assertIn(self.image.absolute_url(), img.attrib['data-src'])
         self.assertEqual(img.attrib['class'], 'lazyload')
 

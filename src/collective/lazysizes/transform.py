@@ -8,6 +8,9 @@ from repoze.xmliter.utils import getHTMLSerializer
 from zope.interface import implementer
 
 
+# grey rectangule, 16x16
+PLACEHOLDER = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEXy8vJkA4prAAAAC0lEQVQI12MgEQAAADAAAWV61nwAAAAASUVORK5CYII='
+
 # to avoid additional network round trips to render content above the fold
 # we only process elements inside the "content" element
 ROOT_SELECTOR = '//*[@id="content"]'
@@ -63,8 +66,7 @@ class LazySizesTransform(object):
         element.attrib['class'] = ' '.join(classes).strip()
 
         if element.tag == 'img':
-            portal_url = api.portal.get().absolute_url()
-            element.attrib['src'] = portal_url + '/++resource++collective.lazysizes/blank.png'
+            element.attrib['src'] = PLACEHOLDER
         elif element.tag == 'iframe':
             del element.attrib['src']
 
