@@ -31,7 +31,7 @@ class InstallTestCase(unittest.TestCase):
     def test_addon_layer(self):
         self.assertIn(ILazySizesLayer, registered_layers())
 
-    @unittest.skipIf(IS_PLONE_5, 'http://stackoverflow.com/q/36454395/644075')
+    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_jsregistry(self):
         resource_ids = self.portal['portal_javascripts'].getResourceIds()
         for js in JS:
@@ -70,6 +70,7 @@ class UninstallTestCase(unittest.TestCase):
     def test_addon_layer_removed(self):
         self.assertNotIn(ILazySizesLayer, registered_layers())
 
+    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_jsregistry_removed(self):
         resource_ids = self.portal['portal_javascripts'].getResourceIds()
         for js in JS:
