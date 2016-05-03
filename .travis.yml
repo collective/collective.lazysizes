@@ -7,6 +7,7 @@ cache:
 env:
 - PLONE_VERSION=4.3
 - PLONE_VERSION=5.0
+- PLONE_VERSION=5.1
 matrix:
   fast_finish: true
 install:
