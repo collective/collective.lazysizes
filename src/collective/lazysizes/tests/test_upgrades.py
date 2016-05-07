@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.lazysizes.testing import INTEGRATION_TESTING
+from collective.lazysizes.testing import IS_PLONE_5
+from plone import api
 
 import unittest
 
@@ -82,3 +84,38 @@ class To3TestCase(UpgradeTestCaseBase):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(version >= self.to_version)
         self.assertEqual(self.total_steps, 1)
+
+
+class To4TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'3', u'4')
+
+    def test_upgrade_to_2_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
+        self.assertEqual(self.total_steps, 2)
+
+    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
+    def test_add_twitter_lazy_loader(self):
+        title = u'Implement support for lazy loading tweets'
+        step = self.get_upgrade_step(title)
+        assert step is not None
+
+        # simulate state on previous version
+        main_script = '++resource++collective.lazysizes/lazysizes.min.js'
+        twitter_script = '++resource++collective.lazysizes/ls.twitter.min.js'
+        js_tool = api.portal.get_tool('portal_javascripts')
+        js_tool.unregisterResource(twitter_script)
+        assert twitter_script not in js_tool.getResourceIds()
+
+        # execute upgrade step and verify changes were applied
+        self.execute_upgrade_step(step)
+
+        # the plugin script must be present
+        self.assertIn(twitter_script, js_tool.getResourceIds())
+        # and must be loaded before the lazySizes main script
+        self.assertEqual(
+            js_tool.getResourcePosition(twitter_script),
+            js_tool.getResourcePosition(main_script) - 1,
+        )

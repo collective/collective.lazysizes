@@ -1,11 +1,6 @@
 # -*- coding:utf-8 -*-
-from collective.lazysizes.config import PROJECTNAME
+from collective.lazysizes.logger import logger
 from plone import api
-
-import logging
-
-
-logger = logging.getLogger(PROJECTNAME)
 
 
 def cook_javascript_resources(context):

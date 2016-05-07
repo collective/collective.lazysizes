@@ -4,6 +4,9 @@ Changelog
 1.5.0b1 (unreleased)
 --------------------
 
+- Embedded tweets are now also lazy loaded (closes `#15`_).
+  [aFarkas, rodfersou, hvelarde]
+
 - Package is now compatible with Plone 5.0 and Plone 5.1.
   [hvelarde]
 
@@ -56,3 +59,4 @@ Changelog
 .. _`#5`: https://github.com/collective/collective.lazysizes/issues/5
 .. _`#8`: https://github.com/collective/collective.lazysizes/issues/8
 .. _`#11`: https://github.com/collective/collective.lazysizes/issues/11
+.. _`#15`: https://github.com/collective/collective.lazysizes/issues/15
