@@ -41,37 +41,90 @@ class LazySizesTransform(object):
         except (AttributeError, TypeError, etree.ParseError):
             return None
 
-    def _lazyload(self, element):
-        """Inject attributes needed by lazysizes to lazy load elements:
+    def _lazyload_img(self, element):
+        """Process <img> tags for lazy loading by using the `src`
+        attribute as `data-src` and loading a placeholder instead.
 
-        * add the "lazyload" class
-        * add a data-src attribute with the referenced object
-        * if the element is an img, set the src attribute with a low
-          resolution scale of the image
-
-        For more information, see: https://afarkas.github.io/lazysizes/
+        :param element: the HTML node to be processed
+        :type element: instance of lxml.html.HtmlElement
+        :returns: the URL of the image to be lazy loaded
+        :rtype: str
         """
+        assert element.tag == 'img'
+        if 'src' not in element.attrib:
+            # `src` attribute is mandatory for <img> tags
+            url = self.request['URL']
+            logger.error('<img> tag without src attribute in: ' + url)
+            return
+        element.attrib['data-src'] = element.attrib['src']
+        element.attrib['src'] = PLACEHOLDER
+        return element.attrib['data-src']
+
+    def _lazyload_iframe(self, element):
+        """Process <iframe> tags for lazy loading by replacing the
+        `src` attribute with a `data-src`.
+
+        :param element: the HTML node to be processed
+        :type element: instance of lxml.html.HtmlElement
+        :returns: the URL of the iframe to be lazy loaded
+        :rtype: str
+        """
+        assert element.tag == 'iframe'
+        if 'src' not in element.attrib:
+            return  # `src` attribute is optional for <iframe> tags
+        element.attrib['data-src'] = element.attrib['src']
+        del element.attrib['src']
+        return element.attrib['data-src']
+
+    def _lazyload_tweet(self, element):
+        """Process tweets for lazy loading. Twitter describes tweets
+        using <blockquote> tags with a `twitter-tweet` class and loads
+        a widget in a sibling <script> tag. To lazy load we need to add
+        a `data-twitter` attribute and remove the widget.
+
+        :param element: the HTML node to be processed
+        :type element: instance of lxml.html.HtmlElement
+        :returns: the URL of the tweet to be lazy loaded
+        :rtype: str
+        """
+        assert element.tag == 'blockquote'
+        element.attrib['data-twitter'] = 'twitter-tweet'
+        # remove sibling <script> tag to avoid an useless request
+        widget = '//platform.twitter.com/widgets.js'
+        sibling = element.getnext()
+        if sibling.tag == 'script' and widget in sibling.attrib['src']:
+            parent = element.getparent()
+            parent.remove(sibling)
+            logger.debug("Twitter's widget <script> tag removed")
+        return element.find('a').attrib['href']
+
+    def _lazyload(self, element):
+        """Inject attributes needed by lazysizes to lazy load elements.
+        For more information, see: https://afarkas.github.io/lazysizes
+        """
+        assert element.tag in ('img', 'iframe', 'blockquote')
+
         classes = element.attrib.get('class', '').split(' ')
         if 'lazyload' in classes:
             return  # this should never happen
 
-        try:
-            element.attrib['data-src'] = element.attrib['src']
-        except KeyError:
-            url = self.request['URL']
-            logger.error('<img> tag without src attribute in: ' + url)
-            return
+        if element.tag == 'img':
+            src = self._lazyload_img(element)
+        elif element.tag == 'iframe':
+            src = self._lazyload_iframe(element)
+        elif element.tag == 'blockquote':
+            if 'twitter-tweet' not in classes:
+                return
+            src = self._lazyload_tweet(element)
+            classes.remove('twitter-tweet')
+
+        if src is None:
+            return  # something went wrong
 
         classes.append('lazyload')
         element.attrib['class'] = ' '.join(classes).strip()
-
-        if element.tag == 'img':
-            element.attrib['src'] = PLACEHOLDER
-        elif element.tag == 'iframe':
-            del element.attrib['src']
-
-        msg = '<{0}> with src="{1}" was processed for lazy loading.'
-        logger.debug(msg.format(element.tag, element.attrib['data-src']))
+        msg = '<{0}> tag with src="{1}" was processed for lazy loading'
+        logger.debug(msg.format(element.tag, src))
 
     def _blacklist(self, result, blacklisted_classes):
         """Return a list of blacklisted elements."""
@@ -80,7 +133,7 @@ class LazySizesTransform(object):
 
         path = []
         for css_class in blacklisted_classes:
-            path.append('{0}{1}//img|{0}{1}//iframe'.format(
+            path.append('{0}{1}//img|{0}{1}//iframe|{0}{1}//blockquote'.format(
                 ROOT_SELECTOR, CLASS_SELECTOR.format(css_class)))
 
         path = '|'.join(path)
@@ -104,7 +157,7 @@ class LazySizesTransform(object):
         blacklist = api.portal.get_registry_record(record)
         blacklist = self._blacklist(result, blacklist)
 
-        path = '{0}//img|{0}//iframe'.format(ROOT_SELECTOR)
+        path = '{0}//img|{0}//iframe|{0}//blockquote'.format(ROOT_SELECTOR)
         for el in result.tree.xpath(path):
             if el in blacklist:
                 continue
