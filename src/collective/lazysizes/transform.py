@@ -90,8 +90,10 @@ class LazySizesTransform(object):
         assert element.tag == 'blockquote'
         element.attrib['data-twitter'] = 'twitter-tweet'
         # remove sibling <script> tag to avoid an useless request
-        widget = '//platform.twitter.com/widgets.js'
         sibling = element.getnext()
+        if sibling is None:
+            return  # Twitter's embed code was somehow modified
+        widget = '//platform.twitter.com/widgets.js'
         if sibling.tag == 'script' and widget in sibling.attrib['src']:
             parent = element.getparent()
             parent.remove(sibling)

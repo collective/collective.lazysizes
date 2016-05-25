@@ -4,7 +4,8 @@ Changelog
 1.5.0b2 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Do not raise an exception in case Twitter's embed code was somehow modified.
+  [hvelarde]
 
 
 1.5.0b1 (2016-05-25)
