@@ -32,6 +32,8 @@ These are some sites using ``collective.lazysizes``:
 * `Conversa Afiada <http://www.conversaafiada.com.br/>`_ (BR)
 * `Portal Brasil 2016 <http://www.brasil2016.gov.br/>`_ (BR)
 
+As long as `we have tested <https://github.com/aFarkas/lazysizes/issues/239>`_, `lazysizes`_ seems not to interfere with image indexing made by crawlers like Googlebot.
+
 Got an idea? Found a bug? Let us know by `opening a support ticket <https://github.com/collective/collective.lazysizes/issues>`_.
 
 Don't Panic
@@ -61,17 +63,16 @@ Check the box next to ``collective.lazysizes`` and click the 'Activate' button.
 How does it work
 ----------------
 
-This package adds a transform to the transform chain to integrate `lazysizes`_ into Plone.
+This package adds a transformer to the transform chain to integrate `lazysizes`_ into Plone.
 
-The transform looks for all the ``<img>`` and ``<iframe>`` elements inside the content and does the following:
+The transformer looks for all the ``<img>``, ``<iframe>`` and ``<blockquote>`` tags inside the content and does the following:
 
 * appends a ``lazyload`` class
-* transforms the ``src`` attribute into a ``data-src`` attribute
-* if the element is an ``<img>``, uses an spinner as ``src`` attribute (this is done to maintain valid HTML code)
+* if the tag is an ``<img>``, transforms the ``src`` attribute into a ``data-src`` and uses a gray square in its place to maintain valid HTML code (this placeholder is loaded using the data URI scheme to avoid a new request to the server)
+* if the tag is an ``<iframe>``, transforms the ``src`` attribute into a ``data-src``
+* if the tag is a ``<blockquote>`` `containing a tweet <https://dev.twitter.com/web/embedded-tweets>`_, it adds a ``data-twitter`` attribute and removes the ``<script>`` tag associated with the Twitter widget to avoid a useless request
 
-The transform is only applied to anonymous users.
-
-As long as `we have tested <https://github.com/aFarkas/lazysizes/issues/239>`_, `lazysizes`_ seems not to interfere with image indexing made by crawlers like Googlebot.
+These transforms are applied to anonymous users only.
 
 Todo
 ----
