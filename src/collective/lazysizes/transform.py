@@ -34,12 +34,12 @@ class LazySizesTransform(object):
         """Create an XMLSerializer from an HTML string, if needed."""
         content_type = self.request.response.getHeader('Content-Type')
         if not content_type or not content_type.startswith('text/html'):
-            return None
+            return
 
         try:
             return getHTMLSerializer(result)
         except (AttributeError, TypeError, etree.ParseError):
-            return None
+            return
 
     def _lazyload_img(self, element):
         """Process <img> tags for lazy loading by using the `src`
@@ -140,18 +140,18 @@ class LazySizesTransform(object):
         return result.tree.xpath(path)
 
     def transformBytes(self, result, encoding):
-        return None
+        return
 
     def transformUnicode(self, result, encoding):
-        return None
+        return
 
     def transformIterable(self, result, encoding):
         if not api.user.is_anonymous():
-            return None
+            return
 
         result = self._parse(result)
         if result is None:
-            return None
+            return
 
         record = ILazySizesSettings.__identifier__ + '.css_class_blacklist'
         blacklist = api.portal.get_registry_record(record)
