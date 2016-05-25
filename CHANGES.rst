@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.5.0b1 (unreleased)
+1.5.0b1 (2016-05-25)
 --------------------
 
 - Embedded tweets are now also lazy loaded (closes `#15`_).
