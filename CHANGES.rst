@@ -4,7 +4,7 @@ Changelog
 1.5.0b2 (unreleased)
 --------------------
 
-- Do not raise an exception in case Twitter's embed code was somehow modified.
+- Do not raise an exception in case Twitter's embed code was somehow modified (closes `#17`_).
   [hvelarde]
 
 
@@ -67,3 +67,4 @@ Changelog
 .. _`#8`: https://github.com/collective/collective.lazysizes/issues/8
 .. _`#11`: https://github.com/collective/collective.lazysizes/issues/11
 .. _`#15`: https://github.com/collective/collective.lazysizes/issues/15
+.. _`#17`: https://github.com/collective/collective.lazysizes/issues/17
