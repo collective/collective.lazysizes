@@ -88,17 +88,22 @@ class LazySizesTransform(object):
         :rtype: str
         """
         assert element.tag == 'blockquote'
+        # processing a tweet is tricky and prone to errors
+        # abort at any time if the user has modified the code
         element.attrib['data-twitter'] = 'twitter-tweet'
         # remove sibling <script> tag to avoid an useless request
         sibling = element.getnext()
         if sibling is None:
-            return  # Twitter's embed code was somehow modified
+            return  # Twitter's embed code was somehow modified, abort
         widget = '//platform.twitter.com/widgets.js'
         if sibling.tag == 'script' and widget in sibling.attrib['src']:
             parent = element.getparent()
             parent.remove(sibling)
             logger.debug("Twitter's widget <script> tag removed")
-        return element.find('a').attrib['href']
+        try:
+            return element.find('a').attrib['href']
+        except AttributeError:
+            return  # Twitter's embed code was somehow modified, abort
 
     def _lazyload(self, element):
         """Inject attributes needed by lazysizes to lazy load elements.
@@ -116,12 +121,13 @@ class LazySizesTransform(object):
             src = self._lazyload_iframe(element)
         elif element.tag == 'blockquote':
             if 'twitter-tweet' not in classes:
-                return
+                return  # not a tweet
             src = self._lazyload_tweet(element)
-            classes.remove('twitter-tweet')
+            if src is not None:
+                classes.remove('twitter-tweet')
 
         if src is None:
-            return  # something went wrong
+            return  # something went wrong or lazy load not needed
 
         classes.append('lazyload')
         element.attrib['class'] = ' '.join(classes).strip()
