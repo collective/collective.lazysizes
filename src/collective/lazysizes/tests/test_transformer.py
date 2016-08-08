@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collective.lazysizes.testing import INTEGRATION_TESTING
 from collective.lazysizes.transform import LazySizesTransform
 
 import lxml
@@ -10,11 +11,23 @@ TWEET = """
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 """
 
+TWEET_MODIFIED = """
+<blockquote class="twitter-tweet" data-lang="en"></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+"""
+
+TWEET_NO_SCRIPT = """
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Nothing Twitter is doing is working <a href="https://t.co/s0FppnacwK">https://t.co/s0FppnacwK</a> <a href="https://t.co/GK9MRfQkYO">pic.twitter.com/GK9MRfQkYO</a></p>&mdash; The Verge (@verge) <a href="https://twitter.com/verge/status/725096763972001794">April 26, 2016</a></blockquote>
+"""
+
 
 class TransformerTestCase(unittest.TestCase):
 
+    layer = INTEGRATION_TESTING
+
     def setUp(self):
-        self.transformer = LazySizesTransform(None, None)
+        request = self.layer['request']
+        self.transformer = LazySizesTransform(None, request)
 
     def test_lazyload_img(self):
         url = 'http://example.com/foo.png'
@@ -29,6 +42,11 @@ class TransformerTestCase(unittest.TestCase):
         self.assertIn('data-src', element.attrib)
         self.assertEqual(element.attrib['data-src'], url)
 
+    def test_lazyload_img_no_src(self):
+        element = lxml.html.fromstring('<img />')
+        # the transformer returns None (skip element)
+        self.assertIsNone(self.transformer._lazyload_img(element))
+
     def test_lazyload_iframe(self):
         url = 'http://example.com/foo/bar'
         iframe_tag = '<iframe src="{0}" />'.format(url)
@@ -41,12 +59,15 @@ class TransformerTestCase(unittest.TestCase):
         self.assertIn('data-src', element.attrib)
         self.assertEqual(element.attrib['data-src'], url)
 
+    def test_lazyload_iframe_no_src(self):
+        element = lxml.html.fromstring('<iframe />')
+        # the transformer returns None (skip element)
+        self.assertIsNone(self.transformer._lazyload_iframe(element))
+
     def test_lazyload_tweet(self):
         url = 'https://twitter.com/verge/status/725096763972001794'
         # get the blockquote tag only
         html = lxml.html.fromstring(TWEET)
-        assert len(html.getchildren()) == 2
-        assert html.getchildren()[1].tag == 'script'
         element = html.getchildren()[0]
         # the transformer returns the URL of the referenced tweet
         self.assertEqual(self.transformer._lazyload_tweet(element), url)
@@ -54,3 +75,16 @@ class TransformerTestCase(unittest.TestCase):
         self.assertIn('data-twitter', element.attrib)
         # the script tag was removed
         self.assertEqual(len(html.getchildren()), 1)
+
+    def test_lazyload_tweet_modified(self):
+        # get the blockquote tag only
+        html = lxml.html.fromstring(TWEET_MODIFIED)
+        element = html.getchildren()[0]
+        # the transformer returns None (skip element)
+        self.assertIsNone(self.transformer._lazyload_tweet(element))
+
+    def test_lazyload_tweet_no_script(self):
+        # get the blockquote tag only
+        element = lxml.html.fromstring(TWEET_NO_SCRIPT)
+        # the transformer returns None (skip element)
+        self.assertIsNone(self.transformer._lazyload_tweet(element))
