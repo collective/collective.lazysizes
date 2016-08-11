@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.5.0b2 (unreleased)
+2.0.0b1 (2016-08-11)
 --------------------
 
 - lazysizes was upgraded to version 2.0.0 and we are using now the AMD module (closes `#20`_).
