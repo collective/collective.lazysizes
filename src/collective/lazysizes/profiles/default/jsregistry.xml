@@ -6,9 +6,9 @@
   <javascript id="++resource++collective.lazysizes/ls.twitter.min.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False"
-      insert-before="++resource++collective.lazysizes/lazysizes.min.js"
+      insert-before="++resource++collective.lazysizes/lazysizes-umd.min.js"
       />
-  <javascript id="++resource++collective.lazysizes/lazysizes.min.js"
+  <javascript id="++resource++collective.lazysizes/lazysizes-umd.min.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" />
 </object>

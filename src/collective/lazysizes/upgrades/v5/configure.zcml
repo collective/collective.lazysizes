@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.lazysizes">
+
+  <genericsetup:upgradeSteps
+      source="4"
+      destination="5"
+      profile="collective.lazysizes:default">
+    <genericsetup:upgradeStep
+        title="Use AMD version of Lazysizes"
+        description=""
+        handler=".use_amd_version"
+        />
+    <genericsetup:upgradeStep
+        title="Cook JavaScripts resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler="..cook_javascript_resources"
+        />
+  </genericsetup:upgradeSteps>
+
+</configure>

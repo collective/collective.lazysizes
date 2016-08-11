@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+from collective.lazysizes.config import IS_PLONE_5
 from collective.lazysizes.testing import FUNCTIONAL_TESTING
-from collective.lazysizes.testing import IS_PLONE_5
 from collective.lazysizes.transform import PLACEHOLDER
 from plone import api
 from plone.testing.z2 import Browser

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+from collective.lazysizes.config import IS_PLONE_5
 from collective.lazysizes.testing import INTEGRATION_TESTING
-from collective.lazysizes.testing import IS_PLONE_5
 from plone import api
 
 import unittest
@@ -103,7 +103,7 @@ class To4TestCase(UpgradeTestCaseBase):
         assert step is not None
 
         # simulate state on previous version
-        main_script = '++resource++collective.lazysizes/lazysizes.min.js'
+        main_script = '++resource++collective.lazysizes/lazysizes-umd.min.js'
         twitter_script = '++resource++collective.lazysizes/ls.twitter.min.js'
         js_tool = api.portal.get_tool('portal_javascripts')
         js_tool.unregisterResource(twitter_script)
@@ -119,3 +119,33 @@ class To4TestCase(UpgradeTestCaseBase):
             js_tool.getResourcePosition(twitter_script),
             js_tool.getResourcePosition(main_script) - 1,
         )
+
+
+class To5TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'4', u'5')
+
+    def test_upgrade_to_2_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(version, self.to_version)
+        self.assertEqual(self.total_steps, 2)
+
+    @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
+    def test_use_amd_version(self):
+        # check if the upgrade step is registered
+        title = u'Use AMD version of Lazysizes'
+        step = self.get_upgrade_step(title)
+        assert step is not None
+
+        # simulate state on previous version
+        from collective.lazysizes.upgrades.v5 import NEW_JS
+        from collective.lazysizes.upgrades.v5 import OLD_JS
+        portal_js = api.portal.get_tool('portal_javascripts')
+        portal_js.renameResource(NEW_JS, OLD_JS)
+        assert OLD_JS in portal_js.getResourceIds()
+
+        # run the upgrade step to validate the update
+        self.execute_upgrade_step(step)
+        self.assertNotIn(OLD_JS, portal_js.getResourceIds())
+        self.assertIn(NEW_JS, portal_js.getResourceIds())

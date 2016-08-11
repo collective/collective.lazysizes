@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+from collective.lazysizes.config import IS_PLONE_5
 from collective.lazysizes.config import PROJECTNAME
 from collective.lazysizes.interfaces import ILazySizesLayer
 from collective.lazysizes.testing import INTEGRATION_TESTING
-from collective.lazysizes.testing import IS_PLONE_5
 from plone import api
 from plone.browserlayer.utils import registered_layers
 
@@ -11,7 +11,8 @@ import unittest
 
 JS = (
     '++resource++collective.lazysizes/ls.respimg.min.js',
-    '++resource++collective.lazysizes/lazysizes.min.js',
+    '++resource++collective.lazysizes/ls.twitter.min.js',
+    '++resource++collective.lazysizes/lazysizes-umd.min.js',
 )
 
 
@@ -48,7 +49,7 @@ class InstallTestCase(unittest.TestCase):
         profile = 'collective.lazysizes:default'
         setup_tool = self.portal['portal_setup']
         self.assertEqual(
-            setup_tool.getLastVersionForProfile(profile), (u'4',))
+            setup_tool.getLastVersionForProfile(profile), (u'5',))
 
 
 class UninstallTestCase(unittest.TestCase):
