@@ -48,6 +48,7 @@ setup(
         'plone.transformchain',
         'Products.CMFPlone >=4.3',
         'Products.GenericSetup',
+        'Products.ResourceRegistries >=2.2.12',
         'repoze.xmliter',
         'setuptools',
         'zope.i18nmessageid',
