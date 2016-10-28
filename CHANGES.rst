@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.0.0b2 (unreleased)
---------------------
+2.0.5rc1 (2016-10-28)
+---------------------
 
 - Clean up configlet;
   the ``image_candidates`` field was removed as the intended functionality will be included in Plone's core in the near future (see `PLIP 1483 <https://github.com/plone/Products.CMFPlone/issues/1483>`_).
