@@ -4,6 +4,9 @@ Changelog
 2.0.0b2 (unreleased)
 --------------------
 
+- Remove dependency on five.grok.
+  [hvelarde]
+
 - Update lazysizes to v2.0.5.
   [hvelarde]
 

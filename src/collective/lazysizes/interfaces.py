@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.lazysizes import _
-from plone.directives import form
+from plone.autoform import directives as form
+from plone.supermodel import model
 from zope import schema
 from zope.interface import Interface
 
@@ -10,7 +11,7 @@ class ILazySizesLayer(Interface):
     """A layer specific for this add-on product."""
 
 
-class ILazySizesSettings(form.Schema):
+class ILazySizesSettings(model.Schema):
 
     """Schema for the control panel form."""
 
