@@ -6,10 +6,4 @@
     <field type="plone.registry.field.Set" />
     <value>set([])</value>
   </record>
-  <record name="collective.lazysizes.interfaces.ILazySizesSettings.image_candidates"
-      interface="collective.lazysizes.interfaces.ILazySizesSettings"
-      field="image_candidates">
-    <field type="plone.registry.field.List" />
-    <value>[]</value>
-  </record>
 </registry>

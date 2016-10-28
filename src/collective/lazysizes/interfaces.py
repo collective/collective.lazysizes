@@ -15,16 +15,6 @@ class ILazySizesSettings(model.Schema):
 
     """Schema for the control panel form."""
 
-    image_candidates = schema.List(
-        title=_(u'Image candidates'),
-        description=_(
-            u'A list of image scales to be used as image candidate strings.'),
-        required=True,
-        default=[],
-        value_type=schema.Choice(
-            vocabulary=u'collective.lazysizes.ImageScales'),
-    )
-
     form.widget('css_class_blacklist', cols=25, rows=10)
     css_class_blacklist = schema.Set(
         title=_(u'CSS class blacklist'),
