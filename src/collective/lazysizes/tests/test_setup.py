@@ -49,7 +49,7 @@ class InstallTestCase(unittest.TestCase):
         profile = 'collective.lazysizes:default'
         setup_tool = self.portal['portal_setup']
         self.assertEqual(
-            setup_tool.getLastVersionForProfile(profile), (u'5',))
+            setup_tool.getLastVersionForProfile(profile), (u'6',))
 
 
 class UninstallTestCase(unittest.TestCase):

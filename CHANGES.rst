@@ -4,6 +4,9 @@ Changelog
 2.0.0b2 (unreleased)
 --------------------
 
+- Update lazysizes to v2.0.5.
+  [hvelarde]
+
 - Pin version of Products.ResourceRegistries >=2.2.12 to fix upgrade step.
   [rodfersou, hvelarde]
 

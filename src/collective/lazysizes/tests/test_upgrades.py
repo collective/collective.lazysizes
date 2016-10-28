@@ -149,3 +149,14 @@ class To5TestCase(UpgradeTestCaseBase):
         self.execute_upgrade_step(step)
         self.assertNotIn(OLD_JS, portal_js.getResourceIds())
         self.assertIn(NEW_JS, portal_js.getResourceIds())
+
+
+class To6TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'5', u'6')
+
+    def test_upgrade_to_6_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(version, self.to_version)
+        self.assertEqual(self.total_steps, 1)
