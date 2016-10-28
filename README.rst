@@ -7,7 +7,7 @@ collective.lazysizes
 Life, the Universe, and Everything
 ==================================
 
-This package integrates `lazysizes`_, a lightweight lazy loader, into Plone.
+This package integrates `lazysizes <https://afarkas.github.io/lazysizes/>`_, a lightweight lazy loader, into Plone.
 
 `lazysizes`_ is a fast, SEO-friendly and self-initializing lazyloader for images (including responsive images picture/srcset), iframes, scripts/widgets and much more.
 It also prioritizes resources by differentiating between crucial in view and near view elements to make perceived performance even faster.
@@ -73,10 +73,3 @@ The transformer looks for all the ``<img>``, ``<iframe>`` and ``<blockquote>`` t
 * if the tag is a ``<blockquote>`` `containing a tweet <https://dev.twitter.com/web/embedded-tweets>`_, it adds a ``data-twitter`` attribute and removes the ``<script>`` tag associated with the Twitter widget to avoid a useless request
 
 These transforms are applied to anonymous users only.
-
-Todo
-----
-
-* implement support for responsive images with ``srcset`` and automatic ``sizes`` attribute
-
-.. _`lazysizes`: https://afarkas.github.io/lazysizes/
