@@ -131,7 +131,7 @@ class LazySizesTransform(object):
 
         classes.append('lazyload')
         element.attrib['class'] = ' '.join(classes).strip()
-        msg = '<{0}> tag with src="{1}" was processed for lazy loading'
+        msg = u'<{0}> tag with src="{1}" was processed for lazy loading'
         logger.debug(msg.format(element.tag, src))
 
     def _blacklist(self, result, blacklisted_classes):

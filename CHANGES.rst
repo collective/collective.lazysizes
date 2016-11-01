@@ -4,7 +4,8 @@ Changelog
 2.0.5rc2 (unreleased)
 ---------------------
 
-- Nothing changed yet.
+- Fix ``UnicodeEncodeError`` on logger.
+  [hvelarde]
 
 
 2.0.5rc1 (2016-10-28)
