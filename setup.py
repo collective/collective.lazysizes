@@ -2,7 +2,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-version = '3.0.0'
+version = '3.0.1.dev0'
 description = 'Integration of lazysizes, a lightweight lazy loader, into Plone.'
 long_description = (
     open('README.rst').read() + '\n' +
