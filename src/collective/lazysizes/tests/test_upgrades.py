@@ -160,3 +160,31 @@ class To6TestCase(UpgradeTestCaseBase):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(version, self.to_version)
         self.assertEqual(self.total_steps, 1)
+
+
+class To7TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'6', u'7')
+
+    def test_upgrade_to_6_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(version, self.to_version)
+        self.assertEqual(self.total_steps, 2)
+
+    @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
+    def test_use_amd_version(self):
+        # check if the upgrade step is registered
+        title = u'Remove respimg polyfill plugin'
+        step = self.get_upgrade_step(title)
+        assert step is not None
+
+        # simulate state on previous version
+        from collective.lazysizes.upgrades.v7 import JS
+        portal_js = api.portal.get_tool('portal_javascripts')
+        portal_js.registerResource(JS)
+        assert JS in portal_js.getResourceIds()
+
+        # run the upgrade step to validate the update
+        self.execute_upgrade_step(step)
+        self.assertNotIn(JS, portal_js.getResourceIds())

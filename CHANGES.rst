@@ -1,8 +1,14 @@
 Changelog
 =========
 
-2.0.5rc2 (unreleased)
----------------------
+3.0.0 (unreleased)
+------------------
+
+- Update lazySizes to v3.0.0.
+  [hvelarde]
+
+- Remove respimg polyfill plugin.
+  [hvelarde]
 
 - Fix ``UnicodeEncodeError`` on logger.
   [hvelarde]

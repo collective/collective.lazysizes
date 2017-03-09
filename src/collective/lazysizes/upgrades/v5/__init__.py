@@ -11,7 +11,8 @@ OLD_JS = '++resource++collective.lazysizes/lazysizes.min.js'
 def use_amd_version(setup_tool):
     """Use AMD version of Lazysizes."""
     if IS_PLONE_5:
-        return  # upgrade step not supported under Plone 5
+        logger.warn('Upgrade step not supported under Plone 5')
+        return
 
     portal_js = api.portal.get_tool('portal_javascripts')
     if OLD_JS in portal_js.getResourceIds():
