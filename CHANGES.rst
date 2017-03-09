@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.0 (unreleased)
+3.0.0 (2017-03-09)
 ------------------
 
 - Update lazySizes to v3.0.0.
