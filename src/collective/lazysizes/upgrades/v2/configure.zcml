@@ -18,6 +18,7 @@
     <genericsetup:upgradeDepends
         title="Add new field to configlet"
         description="Reload registration of configlet registry to add new field."
+        import_profile="collective.lazysizes:default"
         import_steps="plone.app.registry"
         run_deps="false"
         />
