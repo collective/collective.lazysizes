@@ -4,7 +4,8 @@ Changelog
 3.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Avoid possible ``ConfigurationConflictError`` on upgrade step registration.
+  [hvelarde]
 
 
 3.0.0 (2017-03-09)
