@@ -1,9 +1,4 @@
 <?xml version="1.0"?>
 <registry xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="plone">
-  <record name="collective.lazysizes.interfaces.ILazySizesSettings.css_class_blacklist"
-      interface="collective.lazysizes.interfaces.ILazySizesSettings"
-      field="css_class_blacklist">
-    <field type="plone.registry.field.Set" />
-    <value>set([])</value>
-  </record>
+  <records interface="collective.lazysizes.interfaces.ILazySizesSettings" />
 </registry>

@@ -4,6 +4,9 @@ Changelog
 3.0.1 (unreleased)
 ------------------
 
+- Avoid possible overriding of ``css_class_blacklist`` while upgrading.
+  [hvelarde]
+
 - Avoid possible ``ConfigurationConflictError`` on upgrade step registration.
   [hvelarde]
 
