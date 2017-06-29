@@ -17,11 +17,11 @@ By using this package you can expect reductions of up to 80% in load time, 75% i
 Mostly Harmless
 ===============
 
-.. image:: http://img.shields.io/pypi/v/collective.lazysizes.svg
+.. image:: https://img.shields.io/pypi/v/collective.lazysizes.svg
    :target: https://pypi.python.org/pypi/collective.lazysizes
 
 .. image:: https://img.shields.io/travis/collective/collective.lazysizes/master.svg
-    :target: http://travis-ci.org/collective/collective.lazysizes
+    :target: https://travis-ci.org/collective/collective.lazysizes
 
 .. image:: https://img.shields.io/coveralls/collective/collective.lazysizes/master.svg
     :target: https://coveralls.io/r/collective/collective.lazysizes
@@ -56,9 +56,6 @@ After updating the configuration you need to run ''bin/buildout'', which will ta
 Go to the 'Site Setup' page in a Plone site and click on the 'Add-ons' link.
 
 Check the box next to ``collective.lazysizes`` and click the 'Activate' button.
-
-.. Note::
-    You may have to empty your browser cache and save your resource registries in order to see the effects of the product installation.
 
 How does it work
 ----------------
