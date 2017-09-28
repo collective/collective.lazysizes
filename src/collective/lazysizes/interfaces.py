@@ -12,8 +12,16 @@ class ILazySizesLayer(Interface):
 
 
 class ILazySizesSettings(model.Schema):
-
     """Schema for the control panel form."""
+
+    lazyload_authenticated = schema.Bool(
+        title=_(u'Enable for authenticated users?'),
+        description=_(
+            u'By default, images and iframes are lazy loaded only for anonymous users. '
+            u'If selected, lazy loading will be enabled for all users.'
+        ),
+        default=False,
+    )
 
     form.widget('css_class_blacklist', cols=25, rows=10)
     css_class_blacklist = schema.Set(

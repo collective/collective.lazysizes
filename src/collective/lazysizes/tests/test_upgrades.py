@@ -167,7 +167,7 @@ class To7TestCase(UpgradeTestCaseBase):
     def setUp(self):
         UpgradeTestCaseBase.setUp(self, u'6', u'7')
 
-    def test_upgrade_to_6_registrations(self):
+    def test_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(version, self.to_version)
         self.assertEqual(self.total_steps, 2)
@@ -188,3 +188,38 @@ class To7TestCase(UpgradeTestCaseBase):
         # run the upgrade step to validate the update
         self.execute_upgrade_step(step)
         self.assertNotIn(JS, portal_js.getResourceIds())
+
+
+class To8TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'7', u'8')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(version, self.to_version)
+        self.assertEqual(self.total_steps, 1)
+
+    def test_add_new_field_to_configlet(self):
+        title = u'Add lazyload_authenticated field to configlet'
+        step = self.get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        from collective.lazysizes.interfaces import ILazySizesSettings
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+        registry = getUtility(IRegistry)
+
+        # simulate state on previous version
+        record = ILazySizesSettings.__identifier__ + '.lazyload_authenticated'
+        del registry.records[record]
+
+        with self.assertRaises(KeyError):
+            registry.forInterface(ILazySizesSettings)
+
+        # execute upgrade step and verify changes were applied
+        self.execute_upgrade_step(step)
+
+        settings = registry.forInterface(ILazySizesSettings)
+        self.assertTrue(hasattr(settings, 'lazyload_authenticated'))
+        self.assertEqual(settings.lazyload_authenticated, False)

@@ -4,6 +4,9 @@ Changelog
 3.0.1 (unreleased)
 ------------------
 
+- Add configlet option to enable lazy loading for authenticated users.
+  [hvelarde]
+
 - Avoid possible overriding of ``css_class_blacklist`` while upgrading.
   [hvelarde]
 

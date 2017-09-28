@@ -59,12 +59,15 @@ class LazySizesTestCase(unittest.TestCase):
         set_image_field(self.image, image=zptlogo, content_type='image/gif')
         transaction.commit()
 
+    def _set_registry_record(self, record, value):
+        from collective.lazysizes.interfaces import ILazySizesSettings
+        record = ILazySizesSettings.__identifier__ + '.' + record
+        api.portal.set_registry_record(record, value)
+        transaction.commit()
+
     @unittest.skipIf(IS_PLONE_5, 'Plone 4 only')
     def test_blacklist_plone_4(self):
-        from collective.lazysizes.interfaces import ILazySizesSettings
-        record = ILazySizesSettings.__identifier__ + '.css_class_blacklist'
-        api.portal.set_registry_record(record, set(['discreet']))
-        transaction.commit()
+        self._set_registry_record('css_class_blacklist', set(['discreet']))
 
         self.browser.open(self.image.absolute_url() + '/view')
         html = lxml.html.fromstring(self.browser.contents)
@@ -85,10 +88,7 @@ class LazySizesTestCase(unittest.TestCase):
 
     @unittest.skipIf(not IS_PLONE_5, 'Plone 5 only')
     def test_blacklist_plone_5(self):
-        from collective.lazysizes.interfaces import ILazySizesSettings
-        record = ILazySizesSettings.__identifier__ + '.css_class_blacklist'
-        api.portal.set_registry_record(record, set(['discreet']))
-        transaction.commit()
+        self._set_registry_record('css_class_blacklist', set(['discreet']))
 
         self.browser.open(self.image.absolute_url() + '/view')
         html = lxml.html.fromstring(self.browser.contents)

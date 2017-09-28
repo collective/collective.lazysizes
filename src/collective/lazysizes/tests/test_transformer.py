@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from collective.lazysizes.interfaces import ILazySizesSettings
 from collective.lazysizes.testing import INTEGRATION_TESTING
 from collective.lazysizes.transform import LazySizesTransform
 from collective.lazysizes.transform import PLACEHOLDER
+from plone import api
 from plone.app.testing import logout
 
 import lxml
@@ -41,12 +43,21 @@ class TransformerTestCase(unittest.TestCase):
         request.response.setHeader('Content-Type', 'text/html')
         self.transformer = LazySizesTransform(None, request)
 
-    def test_transformer_authenticated_user(self):
+    def test_transformer_anonymous_user(self):
+        logout()
+        result = self.transformer.transformIterable(HTML, 'utf-8')
+        img = result.tree.xpath('//img')[0]
+        self.assertEqual(PLACEHOLDER, img.attrib['src'])
+        self.assertIn('http://example.com/foo.png', img.attrib['data-src'])
+        self.assertEqual(img.attrib['class'], 'lazyload')
+
+    def test_transformer_authenticated_user_disabled(self):
         result = self.transformer.transformIterable(HTML, 'utf-8')
         self.assertIsNone(result)
 
-    def test_transformer_anonymous_user(self):
-        logout()
+    def test_transformer_authenticated_user_enabled(self):
+        record = ILazySizesSettings.__identifier__ + '.lazyload_authenticated'
+        api.portal.set_registry_record(record, True)
         result = self.transformer.transformIterable(HTML, 'utf-8')
         img = result.tree.xpath('//img')[0]
         self.assertEqual(PLACEHOLDER, img.attrib['src'])

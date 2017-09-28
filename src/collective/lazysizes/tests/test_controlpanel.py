@@ -55,6 +55,10 @@ class RegistryTestCase(unittest.TestCase):
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(ILazySizesSettings)
 
+    def test_lazyload_authenticated_record_in_registry(self):
+        self.assertTrue(hasattr(self.settings, 'lazyload_authenticated'))
+        self.assertEqual(self.settings.lazyload_authenticated, False)
+
     def test_css_class_blacklist_record_in_registry(self):
         self.assertTrue(hasattr(self.settings, 'css_class_blacklist'))
         self.assertEqual(self.settings.css_class_blacklist, set([]))
@@ -66,6 +70,7 @@ class RegistryTestCase(unittest.TestCase):
             qi.uninstallProducts(products=[PROJECTNAME])
 
         records = [
+            ILazySizesSettings.__identifier__ + '.lazyload_authenticated',
             ILazySizesSettings.__identifier__ + '.css_class_blacklist',
         ]
 
