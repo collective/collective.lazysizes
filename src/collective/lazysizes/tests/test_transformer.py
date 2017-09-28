@@ -1,10 +1,21 @@
 # -*- coding: utf-8 -*-
 from collective.lazysizes.testing import INTEGRATION_TESTING
 from collective.lazysizes.transform import LazySizesTransform
+from collective.lazysizes.transform import PLACEHOLDER
+from plone.app.testing import logout
 
 import lxml
 import unittest
 
+
+HTML = u"""<html>
+  <body>
+    <div id="content">
+      <img src="http://example.com/foo.png" />
+    </div>
+  </body>
+</html>
+"""
 
 TWEET = """
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Nothing Twitter is doing is working <a href="https://t.co/s0FppnacwK">https://t.co/s0FppnacwK</a> <a href="https://t.co/GK9MRfQkYO">pic.twitter.com/GK9MRfQkYO</a></p>&mdash; The Verge (@verge) <a href="https://twitter.com/verge/status/725096763972001794">April 26, 2016</a></blockquote>
@@ -27,7 +38,20 @@ class TransformerTestCase(unittest.TestCase):
 
     def setUp(self):
         request = self.layer['request']
+        request.response.setHeader('Content-Type', 'text/html')
         self.transformer = LazySizesTransform(None, request)
+
+    def test_transformer_authenticated_user(self):
+        result = self.transformer.transformIterable(HTML, 'utf-8')
+        self.assertIsNone(result)
+
+    def test_transformer_anonymous_user(self):
+        logout()
+        result = self.transformer.transformIterable(HTML, 'utf-8')
+        img = result.tree.xpath('//img')[0]
+        self.assertEqual(PLACEHOLDER, img.attrib['src'])
+        self.assertIn('http://example.com/foo.png', img.attrib['data-src'])
+        self.assertEqual(img.attrib['class'], 'lazyload')
 
     def test_lazyload_img(self):
         url = 'http://example.com/foo.png'

@@ -59,16 +59,6 @@ class LazySizesTestCase(unittest.TestCase):
         set_image_field(self.image, image=zptlogo, content_type='image/gif')
         transaction.commit()
 
-    def test_lazysizes_enabled_for_anonymous_user(self):
-        self.browser.open(self.image.absolute_url() + '/view')
-        html = lxml.html.fromstring(self.browser.contents)
-
-        # main image was processed
-        img = html.xpath('//img')[1]  # first image is the Plone logo
-        self.assertEqual(PLACEHOLDER, img.attrib['src'])
-        self.assertIn(self.image.absolute_url(), img.attrib['data-src'])
-        self.assertEqual(img.attrib['class'], 'lazyload')
-
     @unittest.skipIf(IS_PLONE_5, 'Plone 4 only')
     def test_blacklist_plone_4(self):
         from collective.lazysizes.interfaces import ILazySizesSettings
