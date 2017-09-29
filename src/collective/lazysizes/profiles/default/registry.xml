@@ -1,4 +1,33 @@
 <?xml version="1.0"?>
 <registry xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="plone">
   <records interface="collective.lazysizes.interfaces.ILazySizesSettings" />
+
+  <!-- PLONE 5 BUNDLES - ready to use
+    The compiled bundle file is empty - they are automatically generated/cooked by Plone.
+  -->
+  <records prefix="plone.bundles/lazysizes" interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      condition="have plone-5">
+    <value key="last_compilation"></value>
+    <value key="jscompilation">++plone++collective.lazysizes/bundle-lazysizes-compiled.min.js</value>
+    <value key="merge_with">default</value>
+    <value key="depends"></value>
+    <value key="compile">False</value>
+    <value key="enabled">True</value>
+    <value key="resources">
+      <element>lazysizes-twitter</element>
+      <element>lazysizes</element>
+    </value>
+  </records>
+
+  <!-- PLONE 5 RESOURCES - to depend on from other modules. -->
+  <records prefix="plone.resources/lazysizes" interface='Products.CMFPlone.interfaces.IResourceRegistry'
+      condition="have plone-5">
+      <value key="js">++plone++collective.lazysizes/lazysizes-umd.js</value>
+      <value key="url">++plone++collective.lazysizes</value>
+  </records>
+  <records prefix="plone.resources/lazysizes-twitter" interface='Products.CMFPlone.interfaces.IResourceRegistry'
+      condition="have plone-5">
+      <value key="js">++plone++collective.lazysizes/ls.twitter.js</value>
+  </records>
+
 </registry>

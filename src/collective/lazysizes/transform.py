@@ -11,14 +11,14 @@ from zope.interface import implementer
 
 
 # grey rectangule, 16x16
-PLACEHOLDER = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEXy8vJkA4prAAAAC0lEQVQI12MgEQAAADAAAWV61nwAAAAASUVORK5CYII='
+PLACEHOLDER = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEXy8vJkA4prAAAAC0lEQVQI12MgEQAAADAAAWV61nwAAAAASUVORK5CYII='  # noqa: E501
 
 # to avoid additional network round trips to render content above the fold
 # we only process elements inside the "content" element
 ROOT_SELECTOR = '//*[@id="content"]'
 
 # elements by CSS class; http://stackoverflow.com/a/1604480
-CLASS_SELECTOR = '//*[contains(concat(" ", normalize-space(@class), " "), " {0} ")]'
+CLASS_SELECTOR = '//*[contains(concat(" ", normalize-space(@class), " "), " {0} ")]'  # noqa: E501
 
 
 @implementer(ITransform)
@@ -143,7 +143,7 @@ class LazySizesTransform(object):
 
         path = []
         for css_class in blacklisted_classes:
-            path.append('{0}{1}//img|{0}{1}//iframe|{0}{1}//blockquote'.format(
+            path.append('{0}{1}|{0}{1}//img|{0}{1}//iframe|{0}{1}//blockquote'.format(  # noqa: E501
                 ROOT_SELECTOR, CLASS_SELECTOR.format(css_class)))
 
         path = '|'.join(path)

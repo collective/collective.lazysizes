@@ -5,7 +5,11 @@ from collective.lazysizes.transform import LazySizesTransform
 from collective.lazysizes.transform import PLACEHOLDER
 from plone import api
 from plone.app.testing import logout
+from plone.registry.interfaces import IRegistry
+from testfixtures import log_capture
+from zope.component import getUtility
 
+import logging
 import lxml
 import unittest
 
@@ -13,7 +17,7 @@ import unittest
 HTML = u"""<html>
   <body>
     <div id="content">
-      <img src="http://example.com/foo.png" />
+      <img src="{url}" class="{klass}" />
     </div>
   </body>
 </html>
@@ -45,24 +49,30 @@ class TransformerTestCase(unittest.TestCase):
 
     def test_transformer_anonymous_user(self):
         logout()
-        result = self.transformer.transformIterable(HTML, 'utf-8')
+        url = 'http://example.com/foo.png'
+        html = HTML.format(url=url, klass='')
+        result = self.transformer.transformIterable(html, 'utf-8')
         img = result.tree.xpath('//img')[0]
-        self.assertEqual(PLACEHOLDER, img.attrib['src'])
-        self.assertIn('http://example.com/foo.png', img.attrib['data-src'])
+        self.assertEqual(img.attrib['src'], PLACEHOLDER)
         self.assertEqual(img.attrib['class'], 'lazyload')
+        self.assertIn(img.attrib['data-src'], url)
 
     def test_transformer_authenticated_user_disabled(self):
-        result = self.transformer.transformIterable(HTML, 'utf-8')
+        url = 'http://example.com/foo.png'
+        html = HTML.format(url=url, klass='')
+        result = self.transformer.transformIterable(html, 'utf-8')
         self.assertIsNone(result)
 
     def test_transformer_authenticated_user_enabled(self):
         record = ILazySizesSettings.__identifier__ + '.lazyload_authenticated'
         api.portal.set_registry_record(record, True)
-        result = self.transformer.transformIterable(HTML, 'utf-8')
+        url = 'http://example.com/foo.png'
+        html = HTML.format(url=url, klass='')
+        result = self.transformer.transformIterable(html, 'utf-8')
         img = result.tree.xpath('//img')[0]
-        self.assertEqual(PLACEHOLDER, img.attrib['src'])
-        self.assertIn('http://example.com/foo.png', img.attrib['data-src'])
+        self.assertEqual(img.attrib['src'], PLACEHOLDER)
         self.assertEqual(img.attrib['class'], 'lazyload')
+        self.assertIn(img.attrib['data-src'], url)
 
     def test_lazyload_img(self):
         url = 'http://example.com/foo.png'
@@ -77,10 +87,16 @@ class TransformerTestCase(unittest.TestCase):
         self.assertIn('data-src', element.attrib)
         self.assertEqual(element.attrib['data-src'], url)
 
-    def test_lazyload_img_no_src(self):
+    @log_capture(level=logging.ERROR)
+    def test_lazyload_img_no_src(self, l):
         element = lxml.html.fromstring('<img />')
         # the transformer returns None (skip element)
         self.assertIsNone(self.transformer._lazyload_img(element))
+
+        # an error message must be logged
+        msg = '<img> tag without src attribute in: http://nohost'
+        expected = ('collective.lazysizes', 'ERROR', msg)
+        l.check(expected)
 
     def test_lazyload_iframe(self):
         url = 'http://example.com/foo/bar'
@@ -123,3 +139,51 @@ class TransformerTestCase(unittest.TestCase):
         element = lxml.html.fromstring(TWEET_NO_SCRIPT)
         # the transformer returns None (skip element)
         self.assertIsNone(self.transformer._lazyload_tweet(element))
+
+    def set_css_class_blacklist(self, value):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ILazySizesSettings)
+        settings.css_class_blacklist = value
+
+    def test_css_blacklisted_class(self):
+        self.set_css_class_blacklist({'nolazyload'})
+        logout()  # enable transform
+
+        # Case 1: Do not transform Blacklisted - single class
+        url = 'http://example.com/foo.png'
+        klass = 'nolazyload'
+        html = HTML.format(url=url, klass=klass)
+        result = self.transformer.transformIterable(html, 'utf-8')
+        img = result.tree.xpath('//img')[0]
+        self.assertEqual(img.attrib['src'], url)
+        self.assertEqual(img.attrib['class'], klass)
+        self.assertNotIn('data-src', img.attrib)
+
+    def test_css_blacklisted_multiple_classes(self):
+        self.set_css_class_blacklist({'nolazyload'})
+        logout()  # enable transform
+
+        # Case 2: Do not transform Blacklisted - multiple classes
+        url = 'http://example.com/foo.png'
+        klass = 'nolazyload secondclass thirdclass'
+        html = HTML.format(url=url, klass=klass)
+        result = self.transformer.transformIterable(html, 'utf-8')
+        img = result.tree.xpath('//img')[0]
+        self.assertEqual(img.attrib['src'], url)
+        self.assertEqual(img.attrib['class'], klass)
+        self.assertNotIn('data-src', img.attrib)
+
+    def test_css_blacklisted_false_possitives(self):
+        self.set_css_class_blacklist({'nolazyload'})
+        logout()  # enable transform
+
+        # Case 3: Do not blacklist classes which contain the classname
+        url = 'http://example.com/foo.png'
+        klass = 'nolazyloadbutnot anothernolazyloadbutnot'
+        html = HTML.format(url=url, klass=klass)
+        result = self.transformer.transformIterable(html, 'utf-8')
+        img = result.tree.xpath('//img')[0]
+        self.assertEqual(img.attrib['src'], PLACEHOLDER)
+        self.assertIn(klass, img.attrib['class'])
+        self.assertIn('lazyload', img.attrib['class'])
+        self.assertEqual(img.attrib['data-src'], url)

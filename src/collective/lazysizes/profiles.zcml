@@ -8,7 +8,7 @@
       name="default"
       title="collective.lazysizes"
       directory="profiles/default"
-      description=" Integration of lazysizes, a lightweight lazy loader, into Plone."
+      description="Integration of lazysizes, a lightweight lazy loader, into Plone."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       i18n:attributes="title; description"
       />
