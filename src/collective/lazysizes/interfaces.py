@@ -31,6 +31,6 @@ class ILazySizesSettings(model.Schema):
             u'&lt;img&gt; and &lt;iframe&gt; elements with that class directly applied to them, or to a parent element, will be skipped.'
         ),
         required=False,
-        default=set([]),
+        default=set(),
         value_type=schema.ASCIILine(title=_(u'CSS class')),
     )
