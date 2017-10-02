@@ -4,6 +4,12 @@ Changelog
 3.1 (unreleased)
 ----------------
 
+- Add German translations.
+  [thet]
+
+- Add explicit i18n message ids instead of implicit based on the translation string.
+  [thet]
+
 - Fix Plone 5 compatibility.
   [thet]
 

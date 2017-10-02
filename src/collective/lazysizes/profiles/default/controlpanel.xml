@@ -11,7 +11,7 @@
       url_expr="string:${portal_url}/@@lazysizes-settings"
       icon_expr="string:${portal_url}/++resource++collective.lazysizes/lazysizes-icon.png"
       visible="True"
-      i18n:attributes="title">
+      i18n:attributes="title title_controlpanel">
     <permission>collective.lazysizes: Setup</permission>
   </configlet>
 </object>

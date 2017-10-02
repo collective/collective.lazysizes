@@ -9,18 +9,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: collective.lazysizes\n"
 
 #: collective/lazysizes/profiles.zcml:14
 msgid "Integration of lazysizes, a lightweight lazy loader, into Plone."
-msgstr ""
+msgstr "Integration von lazysizes, eines leichtgewichtigen Lazy Loaders in Plone. "
 
 #: collective/lazysizes/profiles.zcml:23
 msgid "Uninstalls collective.lazysizes."
-msgstr ""
+msgstr "Deinstalliert collective.lazysizes"
 
 #: collective/lazysizes/profiles.zcml:14
 msgid "collective.lazysizes"
@@ -30,38 +30,43 @@ msgstr ""
 msgid "collective.lazysizes: uninstall"
 msgstr ""
 
+# "Here you can modify the settings for collective.lazysizes."
 #. Default: "Here you can modify the settings for collective.lazysizes."
 #: collective/lazysizes/controlpanel.py:14
 msgid "description_controlpanel"
-msgstr ""
+msgstr "Hier können Sie die Einstellungen von collective.lazysizes bearbeiten."
 
+# "A list of CSS class identifiers that will not be processed for lazy loading. &lt;img&gt; and &lt;iframe&gt; elements with that class directly applied to them, or to a parent element, will be skipped."
 #. Default: "A list of CSS class identifiers that will not be processed for lazy loading. &lt;img&gt; and &lt;iframe&gt; elements with that class directly applied to them, or to a parent element, will be skipped."
 #: collective/lazysizes/interfaces.py:37
 msgid "description_css_class_blacklist"
-msgstr ""
+msgstr "Eine Liste von CSS Klassen, die nicht von lazy loading bearbeitet werden. &lt;img&gt; und &lt;iframe&gt; Elemente, die diesen Klassennamen direkt oder auf einem Eltern-Element gesetzt haben, werden übersprungen."
 
 #. Default: "By default, images and iframes are lazy loaded only for anonymous users. If selected, lazy loading will be enabled for all users."
 #: collective/lazysizes/interfaces.py:21
 msgid "description_lazyload_authenticated"
-msgstr ""
+msgstr "Standardmäßig werden bilder und iframes nur für anonyme Benutzer lazy loaded. Wenn die Option aktiviert ist, wird das Nachladen der Bilder für alle Benutzer angewandt."
 
+# "lazysizes"
 #. Default: "lazysizes"
 #: collective/lazysizes/controlpanel.py:10
 #: collective/lazysizes/profiles/default/controlpanel.xml
 msgid "title_controlpanel"
-msgstr ""
+msgstr "Lazysizes"
 
+# "CSS class blacklist"
 #. Default: "CSS class blacklist"
 #: collective/lazysizes/interfaces.py:33
 msgid "title_css_class_blacklist"
-msgstr ""
+msgstr "CSS Klassen blacklist"
 
+# "CSS class"
 #. Default: "CSS class"
 #: collective/lazysizes/interfaces.py:47
 msgid "title_css_class_blacklist_value_type"
-msgstr ""
+msgstr "CSS Klasse"
 
 #. Default: "Enable for authenticated users?"
 #: collective/lazysizes/interfaces.py:17
 msgid "title_lazyload_authenticated"
-msgstr ""
+msgstr "Für angemeldete Benutzer aktivieren"
