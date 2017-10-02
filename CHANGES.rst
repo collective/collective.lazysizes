@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.1 (unreleased)
+3.1 (2017-10-02)
 ----------------
 
 - Add German translations.
