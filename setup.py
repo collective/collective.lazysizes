@@ -42,7 +42,7 @@ setup(
         'lxml',
         'plone.api',
         'plone.app.imaging',
-        'plone.app.registry',
+        'plone.app.registry >=1.5',
         'plone.app.upgrade',
         'plone.autoform',
         'plone.supermodel',

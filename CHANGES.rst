@@ -4,7 +4,8 @@ Changelog
 4.0.0rc3 (unreleased)
 ---------------------
 
-- Nothing changed yet.
+- Require plone.app.registry >=1.5. Refs #42
+  [erral]
 
 
 3.1 (2017-10-02)
