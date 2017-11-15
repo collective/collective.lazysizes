@@ -27,9 +27,9 @@ before_script:
 script:
 - bin/code-analysis
 - bin/test
+- pylint --py3k --disable=no-absolute-import src/collective/lazysizes
 after_success:
 - bin/createcoverage --output-dir=htmlcov -t "--layer=!Robot"
 - coveralls
-- pylint --py3k --disable=no-absolute-import src/collective/lazysizes
 notifications:
   irc: irc.freenode.org#plone-testing
