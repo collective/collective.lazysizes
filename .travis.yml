@@ -13,6 +13,8 @@ env:
 - PLONE_VERSION=5.1
 matrix:
   fast_finish: true
+before_install:
+- pip install coveralls pylint
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - python bootstrap.py
@@ -27,7 +29,7 @@ script:
 - bin/test
 after_success:
 - bin/createcoverage --output-dir=htmlcov -t "--layer=!Robot"
-- pip install coveralls
 - coveralls
+- pylint --py3k --disable=no-absolute-import src/collective/lazysizes
 notifications:
   irc: irc.freenode.org#plone-testing
