@@ -8,7 +8,7 @@ cache:
 addons:
   firefox: latest-esr
 env:
-- PLONE_VERSION=4.3
+- PLONE_VERSION=4.3 VERSIONS=versions:plone.app.registry=1.5
 - PLONE_VERSION=5.0
 - PLONE_VERSION=5.1
 matrix:
@@ -18,8 +18,8 @@ before_install:
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - python bootstrap.py
-- bin/buildout annotate
-- bin/buildout
+- bin/buildout $VERSIONS annotate
+- bin/buildout $VERSIONS
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
