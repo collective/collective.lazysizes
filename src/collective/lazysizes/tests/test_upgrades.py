@@ -223,3 +223,14 @@ class To8TestCase(UpgradeTestCaseBase):
         settings = registry.forInterface(ILazySizesSettings)
         self.assertTrue(hasattr(settings, 'lazyload_authenticated'))
         self.assertEqual(settings.lazyload_authenticated, False)
+
+
+class To9TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'8', u'9')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(version, self.to_version)
+        self.assertEqual(self.total_steps, 1)
