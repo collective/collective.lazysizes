@@ -4,7 +4,8 @@ Changelog
 4.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Avoid ``ValueError`` when upgrading from profile version 3 (fixes `#46 <https://github.com/collective/collective.lazysizes/issues/46>`_).
+  [hvelarde]
 
 
 4.0.1 (2017-11-20)

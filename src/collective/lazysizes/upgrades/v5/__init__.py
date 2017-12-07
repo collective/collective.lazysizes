@@ -15,7 +15,16 @@ def use_amd_version(setup_tool):
         return
 
     portal_js = api.portal.get_tool('portal_javascripts')
-    if OLD_JS in portal_js.getResourceIds():
-        portal_js.renameResource(OLD_JS, NEW_JS)
-        assert NEW_JS in portal_js.getResourceIds()
+    resource_ids = portal_js.getResourceIds()
+    if OLD_JS in resource_ids:
+        # XXX: https://github.com/collective/collective.lazysizes/issues/46
+        if NEW_JS not in resource_ids:
+            # profile version 4: not registered, rename the script
+            portal_js.renameResource(OLD_JS, NEW_JS)
+        else:
+            # earlier version: already registered, remove the old script
+            portal_js.unregisterResource(OLD_JS)
         logger.info('lazysizes was upgraded; using now the AMD module')
+
+    assert OLD_JS not in portal_js.getResourceIds()
+    assert NEW_JS in portal_js.getResourceIds()
