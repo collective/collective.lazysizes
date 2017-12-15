@@ -14,7 +14,9 @@ env:
 matrix:
   fast_finish: true
 before_install:
-- pip install coveralls pylint
+before_install:
+# FIXME: I have no idea how and why six==1.11.0 is being installed
+- pip uninstall -y six
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - python bootstrap.py
@@ -27,9 +29,10 @@ before_script:
 script:
 - bin/code-analysis
 - bin/test
-- pylint --py3k --disable=no-absolute-import src/collective/lazysizes
+- bin/pylint --py3k --disable=no-absolute-import src/collective/lazysizes
 after_success:
 - bin/createcoverage --output-dir=htmlcov -t "--layer=!Robot"
+- pip install coveralls
 - coveralls
 notifications:
   irc: irc.freenode.org#plone-testing
