@@ -9,11 +9,11 @@ class LazySizesSettingsEditForm(controlpanel.RegistryEditForm):
     schema = ILazySizesSettings
     label = _(
         'title_controlpanel',
-        u'lazysizes'
+        u'lazysizes',
     )
     description = _(
         'description_controlpanel',
-        default=u'Here you can modify the settings for collective.lazysizes.'
+        default=u'Here you can modify the settings for collective.lazysizes.',
     )
 
 

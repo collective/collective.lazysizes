@@ -16,14 +16,14 @@ class ILazySizesSettings(model.Schema):
     lazyload_authenticated = schema.Bool(
         title=_(
             'title_lazyload_authenticated',
-            default=u'Enable for authenticated users?'
+            default=u'Enable for authenticated users?',
         ),
         description=_(
             'description_lazyload_authenticated',
             default=u''
             u'By default, images and iframes are lazy loaded only for '
             u'anonymous users. If selected, lazy loading will be enabled for '
-            u'all users.'
+            u'all users.',
         ),
         default=False,
     )
@@ -32,7 +32,7 @@ class ILazySizesSettings(model.Schema):
     css_class_blacklist = schema.Set(
         title=_(
             'title_css_class_blacklist',
-            default=u'CSS class blacklist'
+            default=u'CSS class blacklist',
         ),
         description=_(
             'description_css_class_blacklist',
@@ -40,12 +40,12 @@ class ILazySizesSettings(model.Schema):
             u'A list of CSS class identifiers that will not be processed for '
             u'lazy loading. &lt;img&gt; and &lt;iframe&gt; elements with that '
             u'class directly applied to them, or to a parent element, will be '
-            u'skipped.'
+            u'skipped.',
         ),
         required=False,
         default=set(),
         value_type=schema.ASCIILine(title=_(
             'title_css_class_blacklist_value_type',
-            default=u'CSS class'
+            default=u'CSS class',
         )),
     )
