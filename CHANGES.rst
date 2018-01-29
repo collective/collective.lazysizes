@@ -4,6 +4,9 @@ Changelog
 4.0.2 (unreleased)
 ------------------
 
+- Add compatibility with Python 3.
+  [hvelarde]
+
 - Process static resources using webpack.
   [rodfersou]
 

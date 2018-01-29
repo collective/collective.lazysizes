@@ -52,6 +52,7 @@ setup(
         'Products.ResourceRegistries >=2.2.12',
         'repoze.xmliter',
         'setuptools',
+        'six',
         'zope.i18nmessageid',
         'zope.interface',
         'zope.schema',
