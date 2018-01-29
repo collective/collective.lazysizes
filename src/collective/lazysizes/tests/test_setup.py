@@ -10,8 +10,7 @@ import unittest
 
 
 JS = (
-    '++resource++collective.lazysizes/ls.twitter.min.js',
-    '++resource++collective.lazysizes/lazysizes-umd.min.js',
+    '++resource++collective.lazysizes/lazysizes.js',
 )
 
 
@@ -48,7 +47,7 @@ class InstallTestCase(unittest.TestCase):
         profile = 'collective.lazysizes:default'
         setup_tool = self.portal['portal_setup']
         self.assertEqual(
-            setup_tool.getLastVersionForProfile(profile), (u'9',))
+            setup_tool.getLastVersionForProfile(profile), (u'10',))
 
 
 class UninstallTestCase(unittest.TestCase):

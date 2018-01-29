@@ -4,7 +4,7 @@ from collective.lazysizes.logger import logger
 from plone import api
 
 
-NEW_JS = '++resource++collective.lazysizes/lazysizes-umd.min.js'
+NEW_JS = '++resource++collective.lazysizes/lazysizes.js'
 OLD_JS = '++resource++collective.lazysizes/lazysizes.min.js'
 
 

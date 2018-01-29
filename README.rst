@@ -70,3 +70,38 @@ The transformer looks for all the ``<img>``, ``<iframe>`` and ``<blockquote>`` t
 * if the tag is a ``<blockquote>`` `containing a tweet <https://dev.twitter.com/web/embedded-tweets>`_, it adds a ``data-twitter`` attribute and removes the ``<script>`` tag associated with the Twitter widget to avoid a useless request
 
 These transforms are applied to anonymous users only.
+
+Development
+-----------
+
+We use `webpack <https://webpack.js.org/>`_ to process static resources on this package.
+Webpack processes SCSS and JS files, minifies the resulting CSS and JS, and optimizes all images.
+The final JS file is also a UMD package, which provides compatibility with most popular script loaders.
+
+To contribute, you should start the instance in one shell and start webpack watcher on another with the following command:
+
+.. code-block:: bash
+
+    $ bin/watch-lazysizes
+
+Then go to ``webpack/app`` folder and edit SCSS and JS files;
+Webpack watcher will automatically create the final resources in the right place.
+
+There are also other commands added to handle more complex scenarios.
+The following command will set the buildout node installation in the system PATH, this way you can use webpack as described on its documentation.
+
+.. code-block:: bash
+
+    $ bin/env-lazysizes
+
+The following command generates JS and CSS without the minify step (it can be used to check the code being generated in a human readable way).
+
+.. code-block:: bash
+
+    $ bin/debug-lazysizes
+
+The following command rebuilds static files and exit (insted of keep watching the changes):
+
+.. code-block:: bash
+
+    $ bin/build-lazysizes
