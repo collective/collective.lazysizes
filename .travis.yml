@@ -10,11 +10,9 @@ addons:
   firefox: latest-esr
 env:
 - PLONE_VERSION=4.3 VERSIONS=versions:plone.app.registry=1.5
-- PLONE_VERSION=5.0
 - PLONE_VERSION=5.1
 matrix:
   fast_finish: true
-before_install:
 before_install:
 # FIXME: I have no idea how and why six==1.11.0 is being installed
 - pip uninstall -y six
