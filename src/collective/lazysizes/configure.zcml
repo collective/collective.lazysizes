@@ -43,10 +43,4 @@
       factory=".transform.LazySizesTransform"
       />
 
-  <utility
-      provides="zope.schema.interfaces.IVocabularyFactory"
-      component=".vocabularies.ImageScalesVocabulary"
-      name="collective.lazysizes.ImageScales"
-      />
-
 </configure>

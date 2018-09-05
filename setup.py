@@ -41,7 +41,6 @@ setup(
     install_requires=[
         'lxml',
         'plone.api',
-        'plone.app.imaging',
         'plone.app.registry >=1.5',
         'plone.app.upgrade',
         'plone.autoform',
@@ -52,7 +51,6 @@ setup(
         'Products.ResourceRegistries >=2.2.12',
         'repoze.xmliter',
         'setuptools',
-        'six',
         'zope.i18nmessageid',
         'zope.interface',
         'zope.schema',

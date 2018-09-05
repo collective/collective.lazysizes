@@ -4,7 +4,7 @@ Changelog
 4.0.2 (unreleased)
 ------------------
 
-- Add compatibility with Python 3.
+- Remove unused ``collective.lazysizes.ImageScales`` vocabulary.
   [hvelarde]
 
 - Process static resources using webpack.
