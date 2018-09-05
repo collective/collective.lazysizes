@@ -4,6 +4,10 @@ Changelog
 4.0.2 (unreleased)
 ------------------
 
+- Add lazysizes print plugin;
+  this plugin will automatically unveil all elements as soon as a print is detected even if the given lazyload image isn't in the viewport (fixes `#50 <https://github.com/collective/collective.lazysizes/issues/50>`_).
+  [thet, hvelarde]
+
 - Remove unused ``collective.lazysizes.ImageScales`` vocabulary.
   [hvelarde]
 
