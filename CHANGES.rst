@@ -4,13 +4,6 @@ Changelog
 4.1.1 (unreleased)
 ------------------
 
-.. warning::
-    This release updates dependencies for static resources processing.
-    On development environments you may need to manually remove ``parts`` and ``webpack/node_modules`` directories.
-
-- Update `Node.js <https://nodejs.org/>`_ and sc.recipe.staticresources.
-  [rodfersou]
-
 - Upgrade lazysizes to v4.1.1.
   [hvelarde]
 
