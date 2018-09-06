@@ -1,0 +1,1 @@
+<script async tal:attributes="src view/js"></script>

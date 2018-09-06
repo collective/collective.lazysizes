@@ -24,6 +24,17 @@
 
   <include package=".upgrades" />
 
-  <utility factory=".setuphandlers.HiddenProfiles" name="collective.lazysizes" />
+  <utility
+      factory=".setuphandlers.NonInstallable"
+      name="collective.lazysizes"
+      provides="Products.CMFPlone.interfaces.INonInstallable"
+      />
+
+  <!-- BBB: Plone 4.3 -->
+  <utility
+      factory=".setuphandlers.NonInstallable"
+      name="collective.lazysizes"
+      provides="Products.CMFQuickInstallerTool.interfaces.INonInstallable"
+      />
 
 </configure>

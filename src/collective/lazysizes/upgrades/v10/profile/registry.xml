@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<registry>
+  <records condition="have plone-5" remove="True" prefix="plone.bundles/lazysizes" interface="Products.CMFPlone.interfaces.IBundleRegistry"/>
+  <records condition="have plone-5" remove="True" prefix="plone.resources/lazysizes" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records condition="have plone-5" remove="True" prefix="plone.resources/lazysizes-twitter" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+</registry>

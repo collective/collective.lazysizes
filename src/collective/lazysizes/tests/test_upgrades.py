@@ -118,7 +118,7 @@ class To5TestCase(UpgradeTestCaseBase):
         from collective.lazysizes.upgrades.v5 import NEW_JS
         from collective.lazysizes.upgrades.v5 import OLD_JS
         portal_js = api.portal.get_tool('portal_javascripts')
-        portal_js.renameResource(NEW_JS, OLD_JS)
+        portal_js.registerResource(OLD_JS)
         assert OLD_JS in portal_js.getResourceIds()
 
         # run the upgrade step to validate the update
@@ -222,25 +222,27 @@ class To10TestCase(UpgradeTestCaseBase):
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self.total_steps, 2)
 
-    @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
-    def test_use_webpack(self):
+    @unittest.skipIf(IS_PLONE_5, 'Plone 4.3')
+    def test_deprecate_resource_registries_plone_4(self):
         # check if the upgrade step is registered
-        title = u'Use resource compiled from webpack'
+        title = u'Deprecate resource registries'
         step = self.get_upgrade_step(title)
-        assert step is not None
+        self.assertIsNotNone(step)
 
         # simulate state on previous version
-        from collective.lazysizes.upgrades.v10 import NEW_JS
-        from collective.lazysizes.upgrades.v10 import OLD_JS
-        from collective.lazysizes.upgrades.v10 import TWITTER_JS
-        portal_js = api.portal.get_tool('portal_javascripts')
-        portal_js.renameResource(NEW_JS, OLD_JS)
-        portal_js.registerResource(TWITTER_JS)
-        assert OLD_JS in portal_js.getResourceIds()
-        assert TWITTER_JS in portal_js.getResourceIds()
+        RESOURCES = set([
+            '++resource++collective.lazysizes/ls.twitter.min.js',
+            '++resource++collective.lazysizes/lazysizes-umd.min.js',
+        ])
+        jsregistry = api.portal.get_tool('portal_javascripts')
+        for id_ in RESOURCES:
+            jsregistry.registerResource(id_)
+
+        # the intersection is not an empty set (elements in common)
+        self.assertTrue(set(jsregistry.getResourceIds()) & RESOURCES)
 
         # run the upgrade step to validate the update
         self.execute_upgrade_step(step)
-        self.assertNotIn(OLD_JS, portal_js.getResourceIds())
-        self.assertIn(NEW_JS, portal_js.getResourceIds())
-        self.assertNotIn(TWITTER_JS, portal_js.getResourceIds())
+
+        # the intersection is an empty set (no elements in common)
+        self.assertFalse(set(jsregistry.getResourceIds()) & RESOURCES)

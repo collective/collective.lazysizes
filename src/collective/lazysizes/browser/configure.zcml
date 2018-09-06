@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="collective.lazysizes">
+
+  <browser:viewlet
+      name="collective.lazysizes.resources"
+      manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+      class=".ResourcesViewlet"
+      template="resources.pt"
+      permission="zope2.Public"
+      />
+
+</configure>

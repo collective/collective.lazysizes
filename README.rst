@@ -71,6 +71,13 @@ The transformer looks for all the ``<img>``, ``<iframe>`` and ``<blockquote>`` t
 
 These transforms are applied to anonymous users only.
 
+Look Ma! No Resource Registries
+-------------------------------
+
+This add-on uses a very opinionated approach on how to handle static resources in Plone.
+We just deprecated resource registries in favor of a simpler approach: a viewlet in ``plone.htmlhead``.
+This simplifies maintainance among multiple Plone versions and avoids bundling of unrelated resources.
+
 Development
 -----------
 

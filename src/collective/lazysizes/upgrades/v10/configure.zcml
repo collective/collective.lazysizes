@@ -4,18 +4,25 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="collective.lazysizes">
 
+  <genericsetup:registerProfile
+      name="default"
+      title="collective.lazysizes v10"
+      directory="profile"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
   <genericsetup:upgradeSteps
       source="9"
       destination="10"
       profile="collective.lazysizes:default">
-    <genericsetup:upgradeStep
-        title="Use resource compiled from webpack"
-        description="Now twitter plugin is bundled into the same javascript"
-        handler=".update_static_resources"
+
+    <genericsetup:upgradeDepends
+        title="Deprecate resource registries"
+        import_profile="collective.lazysizes.upgrades.v10:default"
         />
+
     <genericsetup:upgradeStep
         title="Cook JavaScripts resources"
-        description="There were changes in the JS files, so we need to cook the resources."
         handler="..cook_javascript_resources"
         />
   </genericsetup:upgradeSteps>

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.lazysizes.config import IS_PLONE_5
 from collective.lazysizes.config import PROJECTNAME
 from collective.lazysizes.interfaces import ILazySizesLayer
 from collective.lazysizes.testing import INTEGRATION_TESTING
@@ -29,12 +28,6 @@ class InstallTestCase(unittest.TestCase):
 
     def test_addon_layer(self):
         self.assertIn(ILazySizesLayer, registered_layers())
-
-    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
-    def test_jsregistry(self):
-        resource_ids = self.portal['portal_javascripts'].getResourceIds()
-        for js in JS:
-            self.assertIn(js, resource_ids, '{0} not installed'.format(js))
 
     def test_setup_permission(self):
         permission = 'collective.lazysizes: Setup'
@@ -68,9 +61,3 @@ class UninstallTestCase(unittest.TestCase):
 
     def test_addon_layer_removed(self):
         self.assertNotIn(ILazySizesLayer, registered_layers())
-
-    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
-    def test_jsregistry_removed(self):
-        resource_ids = self.portal['portal_javascripts'].getResourceIds()
-        for js in JS:
-            self.assertNotIn(js, resource_ids, '{0} not installed'.format(js))

@@ -4,6 +4,11 @@ Changelog
 4.1.1 (unreleased)
 ------------------
 
+- Deprecate resource registries;
+  instead, we now use a viewlet in ``plone.htmlhead`` to load JavaScript code.
+  This simplifies maintainance of the add-on among multiple Plone versions.
+  [hvelarde]
+
 - Upgrade lazysizes to v4.1.1.
   [hvelarde]
 
