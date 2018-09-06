@@ -24,12 +24,6 @@
       permission="collective.lazysizes.Setup"
       />
 
-  <browser:resourceDirectory
-      name="collective.lazysizes"
-      directory="static"
-      layer="collective.lazysizes.interfaces.ILazySizesLayer"
-      />
-
   <adapter
       for="* .interfaces.ILazySizesLayer"
       name="collective.lazysizes"

@@ -33,9 +33,9 @@ class ResourcesViewletTestCase(unittest.TestCase):
         return viewlet[0]
 
     def test_viewlet(self):
-        from collective.lazysizes.config import JS
         html = etree.HTML(self.viewlet())
         self.assertIn('async', html.xpath('//script')[0].attrib)
-        self.assertTrue(
-            html.xpath('//script')[0].attrib['src'],
-            'http://nohost/plone/' + JS)
+        # script name must include the hash of latest git commit
+        regexp = r'lazysizes-[\da-f]{7}\.js$'
+        self.assertRegexpMatches(
+            html.xpath('//script')[0].attrib['src'], regexp)

@@ -3,11 +3,17 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="collective.lazysizes">
 
+  <browser:resourceDirectory
+      name="collective.lazysizes"
+      directory="static"
+      layer="collective.lazysizes.interfaces.ILazySizesLayer"
+      />
+
   <browser:viewlet
       name="collective.lazysizes.resources"
       manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
       class=".ResourcesViewlet"
-      template="resources.pt"
+      template="static/resources.pt"
       permission="zope2.Public"
       />
 
