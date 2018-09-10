@@ -1,10 +1,11 @@
 Changelog
 =========
 
-4.1.2 (unreleased)
-------------------
+4.1.1.1 (unreleased)
+--------------------
 
-- Nothing changed yet.
+- Avoid ImportError while running upgrade step v10 (fixes `#63 <https://github.com/collective/collective.lazysizes/issues/63>`_).
+  [hvelarde]
 
 
 4.1.1 (2018-09-06)
