@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.1.1.1 (unreleased)
+4.1.1.1 (2018-09-10)
 --------------------
 
 - Avoid ImportError while running upgrade step v10 (fixes `#63 <https://github.com/collective/collective.lazysizes/issues/63>`_).
