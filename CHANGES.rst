@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.1.2 (unreleased)
+4.1.2 (2018-10-01)
 ------------------
 
 - Set webpack ``output.libraryExport`` to ``default`` to avoid ``Mismatched anonymous define() module`` error (fixes `#67 <https://github.com/collective/collective.lazysizes/issues/67>`_).
