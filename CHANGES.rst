@@ -1,9 +1,14 @@
 Changelog
 =========
 
-4.1.1.2 (unreleased)
---------------------
+4.1.2 (unreleased)
+------------------
 
+- Set webpack ``output.libraryExport`` to ``default`` to avoid ``Mismatched anonymous define() module`` error (fixes `#67 <https://github.com/collective/collective.lazysizes/issues/67>`_).
+  [rodfersou, hvelarde]
+
+- Upgrade lazysizes to v4.1.2.
+  [thet]
 
 - Add browser layer to ``collective.lazysizes.resources`` viewlet registration;
   this avoids showing the viewlet when the package is not yet installed (fixes `#69 <https://github.com/collective/collective.lazysizes/issues/69>`_).
