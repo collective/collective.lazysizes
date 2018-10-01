@@ -4,7 +4,10 @@ Changelog
 4.1.1.2 (unreleased)
 --------------------
 
-- Nothing changed yet.
+
+- Add browser layer to ``collective.lazysizes.resources`` viewlet registration;
+  this avoids showing the viewlet when the package is not yet installed (fixes `#69 <https://github.com/collective/collective.lazysizes/issues/69>`_).
+  [erral]
 
 
 4.1.1.1 (2018-09-10)

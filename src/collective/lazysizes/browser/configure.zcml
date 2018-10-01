@@ -15,6 +15,7 @@
       class=".ResourcesViewlet"
       template="static/resources.pt"
       permission="zope2.Public"
+      layer="collective.lazysizes.interfaces.ILazySizesLayer"
       />
 
 </configure>
