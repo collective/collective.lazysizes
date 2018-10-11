@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.1.4 (unreleased)
+4.1.4 (2018-10-11)
 ------------------
 
 - Upgrade lazysizes to v4.1.4.
