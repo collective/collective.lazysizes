@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2017-10-02 17:22+0000\n"
+"POT-Creation-Date: 2018-10-11 18:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,10 @@ msgstr ""
 
 #: collective/lazysizes/profiles.zcml:14
 msgid "collective.lazysizes"
+msgstr ""
+
+#: collective/lazysizes/upgrades/v10/configure.zcml:12
+msgid "collective.lazysizes v10"
 msgstr ""
 
 #: collective/lazysizes/profiles.zcml:23

@@ -4,7 +4,8 @@ Changelog
 4.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update Brazilian Portuguese and Spanish translations.
+  [hvelarde]
 
 
 4.1.2 (2018-10-01)

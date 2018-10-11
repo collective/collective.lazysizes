@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-10-02 17:22+0000\n"
-"PO-Revision-Date: 2016-04-07 20:08-0300\n"
+"POT-Creation-Date: 2018-10-11 18:38+0000\n"
+"PO-Revision-Date: 2018-10-11 15:45-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.lazysizes\n"
 "Language: pt_BR\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: collective/lazysizes/profiles.zcml:14
 msgid "Integration of lazysizes, a lightweight lazy loader, into Plone."
@@ -26,11 +26,15 @@ msgstr "Desinstala collective.lazysizes."
 
 #: collective/lazysizes/profiles.zcml:14
 msgid "collective.lazysizes"
-msgstr ""
+msgstr "collective.lazysizes"
+
+#: collective/lazysizes/upgrades/v10/configure.zcml:12
+msgid "collective.lazysizes v10"
+msgstr "collective.lazysizes v10"
 
 #: collective/lazysizes/profiles.zcml:23
 msgid "collective.lazysizes: uninstall"
-msgstr ""
+msgstr "collective.lazysizes: uninstall"
 
 # "Here you can modify the settings for collective.lazysizes."
 #. Default: "Here you can modify the settings for collective.lazysizes."
@@ -47,7 +51,7 @@ msgstr "Uma lista de identificadores de classes CSS que não serão processados 
 #. Default: "By default, images and iframes are lazy loaded only for anonymous users. If selected, lazy loading will be enabled for all users."
 #: collective/lazysizes/interfaces.py:21
 msgid "description_lazyload_authenticated"
-msgstr ""
+msgstr "Por padrão, o lazy loading está habilitado só para usuários anônimos. Esta opção habilita lazy loading também para usuários autenticados."
 
 # "lazysizes"
 #. Default: "lazysizes"
@@ -71,4 +75,4 @@ msgstr "Classes CSS"
 #. Default: "Enable for authenticated users?"
 #: collective/lazysizes/interfaces.py:17
 msgid "title_lazyload_authenticated"
-msgstr ""
+msgstr "Habilitar para usuários autenticados?"
