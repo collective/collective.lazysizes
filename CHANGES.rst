@@ -4,7 +4,8 @@ Changelog
 4.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Code clean up.
+  [hvelarde]
 
 
 4.1.4 (2018-10-11)

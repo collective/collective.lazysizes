@@ -26,5 +26,5 @@ def use_amd_version(setup_tool):
             portal_js.unregisterResource(OLD_JS)
         logger.info('lazysizes was upgraded; using now the AMD module')
 
-    assert OLD_JS not in portal_js.getResourceIds()
-    assert NEW_JS in portal_js.getResourceIds()
+    assert OLD_JS not in portal_js.getResourceIds()  # nosec
+    assert NEW_JS in portal_js.getResourceIds()  # nosec

@@ -15,7 +15,8 @@ class NonInstallable(object):  # pragma: no cover
             u'collective.lazysizes.upgrades.v10',
         ]
 
-    def getNonInstallableProfiles(self):  # pragma: no cover
+    @staticmethod
+    def getNonInstallableProfiles():
         """Hide at site creation."""
         return [
             u'collective.lazysizes.upgrades.v10:default',

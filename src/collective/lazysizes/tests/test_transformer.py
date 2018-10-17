@@ -10,7 +10,7 @@ from testfixtures import log_capture
 from zope.component import getUtility
 
 import logging
-import lxml
+import lxml  # nosec
 import unittest
 
 
@@ -140,7 +140,8 @@ class TransformerTestCase(unittest.TestCase):
         # the transformer returns None (skip element)
         self.assertIsNone(self.transformer._lazyload_tweet(element))
 
-    def set_css_class_blacklist(self, value):
+    @staticmethod
+    def set_css_class_blacklist(value):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ILazySizesSettings)
         settings.css_class_blacklist = value

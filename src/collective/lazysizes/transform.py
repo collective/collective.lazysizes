@@ -52,17 +52,20 @@ class LazySizesTransform(object):
         :returns: the URL of the image to be lazy loaded
         :rtype: str
         """
-        assert element.tag == 'img'
+        assert element.tag == 'img'  # nosec
+
         if 'src' not in element.attrib:
             # `src` attribute is mandatory for <img> tags
             url = self.request['URL']
             logger.error('<img> tag without src attribute in: ' + url)
             return
+
         element.attrib['data-src'] = element.attrib['src']
         element.attrib['src'] = PLACEHOLDER
         return element.attrib['data-src']
 
-    def _lazyload_iframe(self, element):
+    @staticmethod
+    def _lazyload_iframe(element):
         """Process <iframe> tags for lazy loading by replacing the
         `src` attribute with a `data-src`.
 
@@ -71,14 +74,17 @@ class LazySizesTransform(object):
         :returns: the URL of the iframe to be lazy loaded
         :rtype: str
         """
-        assert element.tag == 'iframe'
+        assert element.tag == 'iframe'  # nosec
+
         if 'src' not in element.attrib:
             return  # `src` attribute is optional for <iframe> tags
+
         element.attrib['data-src'] = element.attrib['src']
         del element.attrib['src']
         return element.attrib['data-src']
 
-    def _lazyload_tweet(self, element):
+    @staticmethod
+    def _lazyload_tweet(element):
         """Process tweets for lazy loading. Twitter describes tweets
         using <blockquote> tags with a `twitter-tweet` class and loads
         a widget in a sibling <script> tag. To lazy load we need to add
@@ -89,7 +95,7 @@ class LazySizesTransform(object):
         :returns: the URL of the tweet to be lazy loaded
         :rtype: str
         """
-        assert element.tag == 'blockquote'
+        assert element.tag == 'blockquote'  # nosec
         # processing a tweet is tricky and prone to errors
         # abort at any time if the user has modified the code
         element.attrib['data-twitter'] = 'twitter-tweet'
@@ -97,6 +103,7 @@ class LazySizesTransform(object):
         sibling = element.getnext()
         if sibling is None:
             return  # Twitter's embed code was somehow modified, abort
+
         widget = '//platform.twitter.com/widgets.js'
         if sibling.tag == 'script' and widget in sibling.attrib['src']:
             parent = element.getparent()
@@ -111,7 +118,7 @@ class LazySizesTransform(object):
         """Inject attributes needed by lazysizes to lazy load elements.
         For more information, see: https://afarkas.github.io/lazysizes
         """
-        assert element.tag in ('img', 'iframe', 'blockquote')
+        assert element.tag in ('img', 'iframe', 'blockquote')  # nosec
 
         classes = element.attrib.get('class', '').split(' ')
         if 'lazyload' in classes:
@@ -136,7 +143,8 @@ class LazySizesTransform(object):
         msg = u'<{0}> tag with src="{1}" was processed for lazy loading'
         logger.debug(msg.format(element.tag, src))
 
-    def _blacklist(self, result, blacklisted_classes):
+    @staticmethod
+    def _blacklist(result, blacklisted_classes):
         """Return a list of blacklisted elements."""
         if not blacklisted_classes:
             return ()
@@ -149,10 +157,12 @@ class LazySizesTransform(object):
         path = '|'.join(path)
         return result.tree.xpath(path)
 
-    def transformBytes(self, result, encoding):
+    @staticmethod
+    def transformBytes(result, encoding):
         return
 
-    def transformUnicode(self, result, encoding):
+    @staticmethod
+    def transformUnicode(result, encoding):
         return
 
     def transformIterable(self, result, encoding):
