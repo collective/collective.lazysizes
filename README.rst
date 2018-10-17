@@ -23,13 +23,18 @@ Mostly Harmless
 .. image:: https://img.shields.io/travis/collective/collective.lazysizes/master.svg
     :target: https://travis-ci.org/collective/collective.lazysizes
 
+.. image:: https://img.shields.io/codacy/grade/13edd837b059493ab64d8186f5fe6cf4.svg
+    :target: https://app.codacy.com/project/hvelarde/collective.lazysizes/dashboard
+
 .. image:: https://img.shields.io/coveralls/collective/collective.lazysizes/master.svg
     :target: https://coveralls.io/r/collective/collective.lazysizes
 
 These are some sites using ``collective.lazysizes``:
 
-* `CartaCapital <http://www.cartacapital.com.br/>`_ (BR)
-* `Conversa Afiada <http://www.conversaafiada.com.br/>`_ (BR)
+* `Brazilian Government <http://www.brasil.gov.br/>`_ (BR)
+* `Brazilian Presidency <http://www.planalto.gov.br/>`_ (BR)
+* `CartaCapital <https://www.cartacapital.com.br/>`_ (BR)
+* `Conversa Afiada <https://www.conversaafiada.com.br/>`_ (BR)
 * `Portal Brasil 2016 <http://www.brasil2016.gov.br/>`_ (BR)
 
 As long as `we have tested <https://github.com/aFarkas/lazysizes/issues/239>`_, `lazysizes`_ seems not to interfere with image indexing made by crawlers like Googlebot.
