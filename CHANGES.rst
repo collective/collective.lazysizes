@@ -4,6 +4,12 @@ Changelog
 4.1.5 (unreleased)
 ------------------
 
+- Add support for Plone 5.2 and Python 3.
+  [hvelarde]
+
+- Drop explicit support for Plone 5.0.
+  [hvelarde]
+
 - Code clean up.
   [hvelarde]
 
