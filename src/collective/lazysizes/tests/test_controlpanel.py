@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from collective.lazysizes.config import PROJECTNAME
 from collective.lazysizes.interfaces import ILazySizesSettings
 from collective.lazysizes.testing import INTEGRATION_TESTING
-from plone import api
+from collective.lazysizes.testing import QIBBB
 from plone.app.testing import logout
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
@@ -10,12 +9,13 @@ from zope.component import getUtility
 import unittest
 
 
-class ControlPanelTestCase(unittest.TestCase):
+class ControlPanelTestCase(unittest.TestCase, QIBBB):
 
     layer = INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.request = self.layer['request']
         self.controlpanel = self.portal['portal_controlpanel']
 
     def test_controlpanel_view_is_protected(self):
@@ -30,22 +30,20 @@ class ControlPanelTestCase(unittest.TestCase):
         self.assertIn('lazysizes', actions)
 
     def test_controlpanel_removed_on_uninstall(self):
-        qi = self.portal['portal_quickinstaller']
+        self.uninstall()  # BBB: QI compatibility
 
-        with api.env.adopt_roles(['Manager']):
-            qi.uninstallProducts(products=[PROJECTNAME])
-
-        actions = [a.getAction(self)['id']
-                   for a in self.controlpanel.listActions()]
+        actions = [
+            a.getAction(self)['id'] for a in self.controlpanel.listActions()]
         self.assertNotIn('lazysizes', actions)
 
 
-class RegistryTestCase(unittest.TestCase):
+class RegistryTestCase(unittest.TestCase, QIBBB):
 
     layer = INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.request = self.layer['request']
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(ILazySizesSettings)
 
@@ -58,10 +56,7 @@ class RegistryTestCase(unittest.TestCase):
         self.assertEqual(self.settings.css_class_blacklist, set([]))
 
     def test_records_removed_on_uninstall(self):
-        qi = self.portal['portal_quickinstaller']
-
-        with api.env.adopt_roles(['Manager']):
-            qi.uninstallProducts(products=[PROJECTNAME])
+        self.uninstall()  # BBB: QI compatibility
 
         records = [
             ILazySizesSettings.__identifier__ + '.lazyload_authenticated',

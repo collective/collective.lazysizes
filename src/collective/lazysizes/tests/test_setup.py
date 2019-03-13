@@ -2,7 +2,8 @@
 from collective.lazysizes.config import PROJECTNAME
 from collective.lazysizes.interfaces import ILazySizesLayer
 from collective.lazysizes.testing import INTEGRATION_TESTING
-from plone import api
+from collective.lazysizes.testing import IS_BBB
+from collective.lazysizes.testing import QIBBB
 from plone.browserlayer.utils import registered_layers
 
 import unittest
@@ -21,8 +22,16 @@ class InstallTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.request = self.layer['request']
 
+    @unittest.skipIf(IS_BBB, 'Plone >= 5.1')
     def test_installed(self):
+        from Products.CMFPlone.utils import get_installer
+        qi = get_installer(self.portal, self.request)
+        self.assertTrue(qi.is_product_installed(PROJECTNAME))
+
+    @unittest.skipUnless(IS_BBB, 'Plone < 5.1')
+    def test_installed_BBB(self):
         qi = self.portal['portal_quickinstaller']
         self.assertTrue(qi.isProductInstalled(PROJECTNAME))
 
@@ -43,20 +52,22 @@ class InstallTestCase(unittest.TestCase):
             setup_tool.getLastVersionForProfile(profile), (u'10',))
 
 
-class UninstallTestCase(unittest.TestCase):
-
+class UninstallTestCase(unittest.TestCase, QIBBB):
     """Ensure product is properly uninstalled."""
 
     layer = INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
-        self.qi = self.portal['portal_quickinstaller']
+        self.request = self.layer['request']
+        self.qi = self.uninstall()  # BBB: QI compatibility
 
-        with api.env.adopt_roles(['Manager']):
-            self.qi.uninstallProducts(products=[PROJECTNAME])
-
+    @unittest.skipIf(IS_BBB, 'Plone >= 5.1')
     def test_uninstalled(self):
+        self.assertFalse(self.qi.is_product_installed(PROJECTNAME))
+
+    @unittest.skipUnless(IS_BBB, 'Plone < 5.1')
+    def test_uninstalled_BBB(self):
         self.assertFalse(self.qi.isProductInstalled(PROJECTNAME))
 
     def test_addon_layer_removed(self):

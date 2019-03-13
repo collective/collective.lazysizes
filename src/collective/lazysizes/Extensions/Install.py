@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# BBB: remove on deprecation of Plone 4.3
 from collective.lazysizes.config import PROJECTNAME
 from plone import api
 
