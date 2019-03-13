@@ -18,12 +18,6 @@ class ControlPanelTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.controlpanel = self.portal['portal_controlpanel']
 
-    def test_controlpanel_has_view(self):
-        request = self.layer['request']
-        view = api.content.get_view(u'lazysizes-settings', self.portal, request)
-        view = view.__of__(self.portal)
-        self.assertTrue(view())
-
     def test_controlpanel_view_is_protected(self):
         from AccessControl import Unauthorized
         logout()
