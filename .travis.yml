@@ -11,8 +11,12 @@ addons:
 env:
 - PLONE_VERSION=4.3
 - PLONE_VERSION=5.1
+- PLONE_VERSION=5.2
 matrix:
   fast_finish: true
+  include:
+  - python: 3.6
+    env: PLONE_VERSION=5.2
 before_install:
 # FIXME: I have no idea how and why six==1.11.0 is being installed
 - pip uninstall -y six
