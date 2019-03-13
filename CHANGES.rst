@@ -1,8 +1,11 @@
 Changelog
 =========
 
-4.1.5 (unreleased)
+4.1.6 (unreleased)
 ------------------
+
+- Update lazysizes to v4.1.6.
+  [hvelarde]
 
 - Add support for Plone 5.2 and Python 3.
   [hvelarde]
