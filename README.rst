@@ -89,7 +89,7 @@ Development
 -----------
 
 We use `webpack <https://webpack.js.org/>`_ to process static resources on this package.
-Webpack processes SCSS and JS files, minifies the resulting CSS and JS, and optimizes all images.
+`webpack`_ processes SCSS and JS files, minifies the resulting CSS and JS, and optimizes all images.
 
 To contribute, you should start the instance in one shell and start webpack watcher on another with the following command:
 
