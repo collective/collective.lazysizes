@@ -130,7 +130,7 @@ If you release using zest.releaser you have to `upload manually the files to PyP
 * run ``longtest`` and ``fullrelease``, as usually
 * answer "no" when asked to upload to PyPI and continue normally
 * do a checkout to the tag you're releasing
-* run ``bin/build-richpreview`` to update static files
+* run ``bin/build-lazysizes`` to update static files
 * create the distribution files using ``python setup.py sdist bdist_wheel`` as usual
 * upload the files using ``twine upload dist/*``
 
